@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { GraduationCap, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Particles from "../components/common/Particles";
+import { useTranslation } from "../hooks/useTranslation";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -31,55 +34,42 @@ const Login: React.FC = () => {
     if (email === demoAccount.email && password === demoAccount.password) {
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("userEmail", email);
-      toast.success("Login successful! Welcome back.");
+      toast.success(t("loginSuccess"));
       navigate("/");
     } else {
-      toast.error("Invalid email or password. Please try again.");
+      toast.error(t("loginError"));
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left side - Image/Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 flex flex-col justify-center items-center text-white p-12">
-          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-8">
-            <GraduationCap className="w-12 h-12" />
-          </div>
-          <h1 className="text-4xl font-bold mb-4 text-center">
-            Welcome to SysEdu AI
-          </h1>
-          <p className="text-xl text-center text-white/90 max-w-md">
-            Your trusted platform for modern education management and seamless
-            learning experience.
-          </p>
-          <div className="mt-12 grid grid-cols-3 gap-4 opacity-60">
-            {[...Array(9)].map((_, i) => (
-              <div key={i} className="w-2 h-2 bg-white/40 rounded-full"></div>
-            ))}
-          </div>
-        </div>
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Particles Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900">
+        <Particles
+          particleCount={150}
+          particleSpread={8}
+          speed={0.15}
+          particleColors={["#10b981", "#14b8a6", "#06b6d4"]}
+          alphaParticles={true}
+          particleBaseSize={80}
+          sizeRandomness={1.5}
+        />
       </div>
 
-      {/* Right side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
+      {/* Login Form Container */}
+      <div className="relative z-10 w-full max-w-md">
+        {/* Login Form Card */}
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 space-y-8">
           {/* Header */}
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-6">
-              <GraduationCap className="w-7 h-7 text-white" />
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">Sign in</h2>
-            <p className="mt-2 text-gray-600">
-              Access your education dashboard
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900">{t("signIn")}</h2>
+            <p className="mt-2 text-gray-600">{t("accessDashboard")}</p>
           </div>
 
           {/* Demo Account */}
           <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
             <h3 className="text-sm font-semibold text-emerald-900 mb-3">
-              Demo Account - Click to auto-fill
+              {t("demoAccount")}
             </h3>
             <button
               type="button"
@@ -96,7 +86,7 @@ const Login: React.FC = () => {
                   <p className="text-xs text-gray-600">{demoAccount.email}</p>
                 </div>
                 <div className="text-xs text-emerald-600 font-medium">
-                  Click to fill
+                  {t("clickToFill")}
                 </div>
               </div>
             </button>
@@ -110,7 +100,7 @@ const Login: React.FC = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email address
+                {t("loginEmail")}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -121,7 +111,7 @@ const Login: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder={t("emailPlaceholder")}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
@@ -133,7 +123,7 @@ const Login: React.FC = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Password
+                {t("loginPassword")}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -144,7 +134,7 @@ const Login: React.FC = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder={t("passwordPlaceholder")}
                   className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                 />
                 <button
@@ -173,14 +163,14 @@ const Login: React.FC = () => {
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-700"
                 >
-                  Keep me signed in
+                  {t("keepSignedIn")}
                 </label>
               </div>
               <a
                 href="#"
                 className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
               >
-                Reset password
+                {t("resetPassword")}
               </a>
             </div>
 
@@ -189,19 +179,19 @@ const Login: React.FC = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-emerald-600 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200 hover:scale-[1.01] shadow-lg"
             >
-              Sign in to your account
+              {t("signInButton")}
             </button>
           </form>
 
           {/* Footer */}
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              New to our platform?{" "}
+              {t("newToPlatform")}{" "}
               <a
                 href="#"
                 className="font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
               >
-                Create an account
+                {t("createAccount")}
               </a>
             </p>
           </div>

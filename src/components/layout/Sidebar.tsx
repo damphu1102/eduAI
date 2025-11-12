@@ -14,6 +14,7 @@ import {
   Settings,
   X,
 } from "lucide-react";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
@@ -24,38 +25,44 @@ const Sidebar: React.FC<SidebarProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }) => {
+  const { t } = useTranslation();
+
   const menuItems = [
-    { path: "/", icon: LayoutDashboard, label: "Dashboard" },
-    { path: "/class-management", icon: Users, label: "Class Management" },
+    { path: "/", icon: LayoutDashboard, label: t("dashboard") },
+    { path: "/class-management", icon: Users, label: t("classManagement") },
     {
       path: "/curriculum-management",
       icon: BookOpen,
-      label: "Curriculum Management",
+      label: t("curriculumManagement"),
     },
     {
       path: "/course-management",
       icon: GraduationCap,
-      label: "Course Management",
+      label: t("courseManagement"),
     },
     {
       path: "/assignments-games",
       icon: GamepadIcon,
-      label: "Assignments & Games",
+      label: t("assignmentsGames"),
     },
-    { path: "/exam-management", icon: FileText, label: "Exam Management" },
-    { path: "/document-library", icon: FolderOpen, label: "Document Library" },
+    { path: "/exam-management", icon: FileText, label: t("examManagement") },
+    {
+      path: "/document-library",
+      icon: FolderOpen,
+      label: t("documentLibrary"),
+    },
     {
       path: "/gamification-grading",
       icon: Trophy,
-      label: "Gamification & Grading",
+      label: t("gamificationGrading"),
     },
-    { path: "/users-roles", icon: UserCheck, label: "Users & Roles" },
+    { path: "/users-roles", icon: UserCheck, label: t("usersRoles") },
     {
       path: "/analytics-reports",
       icon: BarChart3,
-      label: "Analytics & Reports",
+      label: t("analyticsReports"),
     },
-    { path: "/settings", icon: Settings, label: "Settings" },
+    { path: "/settings", icon: Settings, label: t("settings") },
   ];
 
   return (

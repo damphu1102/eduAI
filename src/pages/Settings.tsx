@@ -1,27 +1,81 @@
 import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
 import { User, Bell, Lock, Globe, Palette, Database } from "lucide-react";
+import { useSettings, type Language } from "../context/SettingsContext";
+import { timezones } from "../utils/timezones";
+import { toast } from "react-toastify";
+import { useTranslation } from "../hooks/useTranslation";
 
 const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const { t } = useTranslation();
+  const {
+    language,
+    timezone,
+    datetimeFormat,
+    setLanguage,
+    setTimezone,
+    setDatetimeFormat,
+  } = useSettings();
+
+  // Local state for temporary changes
+  const [tempLanguage, setTempLanguage] = useState<Language>(language);
+  const [tempTimezone, setTempTimezone] = useState(timezone);
+  const [tempDatetimeFormat, setTempDatetimeFormat] = useState(datetimeFormat);
+
+  const languageOptions = [
+    { value: "en", label: "English (Anh)" },
+    { value: "vi", label: "Tiếng Việt (Việt)" },
+    { value: "zh", label: "中文 (Trung)" },
+    { value: "ko", label: "한국어 (Hàn)" },
+    { value: "ja", label: "日本語 (Nhật)" },
+  ];
+
+  const datetimeFormatOptions = [
+    {
+      value: "DD/MM/YYYY HH:mm:ss",
+      label: "DD/MM/YYYY HH:mm:ss (31/12/2025 23:59:59)",
+    },
+    {
+      value: "MM/DD/YYYY HH:mm:ss",
+      label: "MM/DD/YYYY HH:mm:ss (12/31/2025 23:59:59)",
+    },
+    {
+      value: "YYYY-MM-DD HH:mm:ss",
+      label: "YYYY-MM-DD HH:mm:ss (2025-12-31 23:59:59)",
+    },
+    {
+      value: "DD/MM/YYYY hh:mm:ss A",
+      label: "DD/MM/YYYY hh:mm:ss A (31/12/2025 11:59:59 PM)",
+    },
+    {
+      value: "YYYY年MM月DD日 HH:mm:ss",
+      label: "YYYY年MM月DD日 HH:mm:ss (2025年12月31日 23:59:59)",
+    },
+  ];
+
+  const handleSaveLanguageSettings = () => {
+    setLanguage(tempLanguage);
+    setTimezone(tempTimezone);
+    setDatetimeFormat(tempDatetimeFormat);
+    toast.success(t("settingsSaved"));
+  };
 
   const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "notifications", label: "Notifications", icon: Bell },
-    { id: "security", label: "Security", icon: Lock },
-    { id: "language", label: "Language & Region", icon: Globe },
-    { id: "appearance", label: "Appearance", icon: Palette },
-    { id: "data", label: "Data & Privacy", icon: Database },
+    { id: "profile", label: t("profile"), icon: User },
+    { id: "notifications", label: t("notifications"), icon: Bell },
+    { id: "security", label: t("security"), icon: Lock },
+    { id: "language", label: t("languageRegion"), icon: Globe },
+    { id: "appearance", label: t("appearance"), icon: Palette },
+    { id: "data", label: t("dataPrivacy"), icon: Database },
   ];
 
   return (
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600 mt-1">
-            Manage your account settings and preferences
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("settings")}</h1>
+          <p className="text-gray-600 mt-1">{t("manageSettings")}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -221,46 +275,91 @@ const Settings: React.FC = () => {
               {activeTab === "language" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Language & Region
+                    {t("languageRegion")}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Language
+                        {t("language")}
                       </label>
-                      <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option>English</option>
-                        <option>Tiếng Việt</option>
-                        <option>中文</option>
-                        <option>日本語</option>
+                      <select
+                        value={tempLanguage}
+                        onChange={(e) =>
+                          setTempLanguage(e.target.value as Language)
+                        }
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {languageOptions.map((lang) => (
+                          <option key={lang.value} value={lang.value}>
+                            {lang.label}
+                          </option>
+                        ))}
                       </select>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {t("languageDesc")}
+                      </p>
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Time Zone
+                        {t("timeZone")}
                       </label>
-                      <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option>UTC+7 (Bangkok, Hanoi, Jakarta)</option>
-                        <option>UTC+8 (Beijing, Singapore)</option>
-                        <option>UTC+9 (Tokyo, Seoul)</option>
+                      <select
+                        value={tempTimezone}
+                        onChange={(e) => setTempTimezone(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {timezones.map((tz) => (
+                          <option key={tz.value} value={tz.value}>
+                            {tz.offset} - {tz.label}
+                          </option>
+                        ))}
                       </select>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {t("timeZoneDesc")}
+                      </p>
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Date Format
+                        {t("datetimeFormat")}
                       </label>
-                      <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option>DD/MM/YYYY</option>
-                        <option>MM/DD/YYYY</option>
-                        <option>YYYY-MM-DD</option>
+                      <select
+                        value={tempDatetimeFormat}
+                        onChange={(e) => setTempDatetimeFormat(e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        {datetimeFormatOptions.map((format) => (
+                          <option key={format.value} value={format.value}>
+                            {format.label}
+                          </option>
+                        ))}
                       </select>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {t("datetimeFormatDesc")}
+                      </p>
                     </div>
 
-                    <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Save Changes
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm font-medium text-blue-900 mb-1">
+                        {t("preview")}
+                      </p>
+                      <p className="text-sm text-blue-700">
+                        {t("currentTimeInTimezone")}{" "}
+                        <span className="font-semibold">
+                          {new Date().toLocaleString("en-GB", {
+                            timeZone: tempTimezone,
+                          })}
+                        </span>
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={handleSaveLanguageSettings}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      {t("saveChanges")}
                     </button>
                   </div>
                 </div>

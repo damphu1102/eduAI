@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Search, Bell, User, LogOut, Menu } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Search, Bell, User, LogOut, Menu, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSettings } from "../../context/SettingsContext";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface HeaderProps {
   isMobileMenuOpen: boolean;
@@ -14,6 +16,17 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const { t } = useTranslation();
+  const { getCurrentDateTime } = useSettings();
+  const [currentTime, setCurrentTime] = useState(getCurrentDateTime());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(getCurrentDateTime());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [getCurrentDateTime]);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -40,14 +53,32 @@ const Header: React.FC<HeaderProps> = ({
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder={t("search")}
               className="pl-10 pr-4 py-2 w-64 lg:w-80 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
             />
           </div>
         </div>
 
-        {/* Right side - Notifications and User */}
+        {/* Right side - DateTime, Notifications and User */}
         <div className="flex items-center space-x-2 md:space-x-4">
+          {/* DateTime Display - Desktop */}
+          <div className="hidden lg:flex items-center space-x-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg">
+            <Clock className="w-4 h-4 text-emerald-600" />
+            <span className="text-sm font-medium text-emerald-700">
+              {currentTime}
+            </span>
+          </div>
+
+          {/* DateTime Display - Mobile (Icon with tooltip) */}
+          <div className="lg:hidden relative group">
+            <button className="p-2 text-emerald-600 hover:text-emerald-700 transition-colors">
+              <Clock className="w-5 h-5" />
+            </button>
+            <div className="absolute right-0 top-full mt-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+              {currentTime}
+            </div>
+          </div>
+
           {/* Mobile Search Button */}
           <button className="md:hidden p-2 text-gray-400 hover:text-gray-600 transition-colors">
             <Search className="w-5 h-5" />
@@ -68,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({
               </div>
               <div className="text-sm text-left hidden md:block">
                 <div className="font-medium text-gray-900">Admin User</div>
-                <div className="text-gray-500">Administrator</div>
+                <div className="text-gray-500">{t("administrator")}</div>
               </div>
             </button>
 
@@ -80,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({
                   className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 transition-colors"
                 >
                   <LogOut className="w-4 h-4 mr-3" />
-                  Logout
+                  {t("logout")}
                 </button>
               </div>
             )}

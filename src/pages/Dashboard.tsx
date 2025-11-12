@@ -14,37 +14,40 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { useTranslation } from "../hooks/useTranslation";
 
 const Dashboard: React.FC = () => {
+  const { t } = useTranslation();
+
   const stats = [
     {
-      title: "Total Classes",
+      title: t("totalClasses"),
       value: "24",
-      change: "+12% from last month",
+      change: `+12% ${t("fromLastMonth")}`,
       changeType: "increase" as const,
       icon: Users,
       color: "bg-blue-500",
     },
     {
-      title: "Total Students",
+      title: t("totalStudents"),
       value: "1,248",
-      change: "+8% from last month",
+      change: `+8% ${t("fromLastMonth")}`,
       changeType: "increase" as const,
       icon: GraduationCap,
       color: "bg-green-500",
     },
     {
-      title: "Active Courses",
+      title: t("activeCourses"),
       value: "156",
-      change: "+5% from last month",
+      change: `+5% ${t("fromLastMonth")}`,
       changeType: "increase" as const,
       icon: BookOpen,
       color: "bg-purple-500",
     },
     {
-      title: "Completion Rate",
+      title: t("completionRate"),
       value: "87%",
-      change: "+3% from last month",
+      change: `+3% ${t("fromLastMonth")}`,
       changeType: "increase" as const,
       icon: TrendingUp,
       color: "bg-orange-500",
@@ -52,9 +55,9 @@ const Dashboard: React.FC = () => {
   ];
 
   const pieData = [
-    { name: "Completed", value: 65, color: "#10B981" },
-    { name: "In Progress", value: 25, color: "#3B82F6" },
-    { name: "Not Started", value: 10, color: "#EF4444" },
+    { name: t("completed"), value: 65, color: "#10B981" },
+    { name: t("inProgress"), value: 25, color: "#3B82F6" },
+    { name: t("notStarted"), value: 10, color: "#EF4444" },
   ];
 
   const lineData = [
@@ -72,10 +75,10 @@ const Dashboard: React.FC = () => {
         {/* Page Header */}
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-gray-900">
-            Dashboard Overview
+            {t("dashboardOverview")}
           </h1>
           <p className="text-sm md:text-base text-gray-600 mt-1">
-            Welcome back! Here's what's happening with your education system.
+            {t("dashboardWelcome")}
           </p>
         </div>
 
@@ -91,7 +94,7 @@ const Dashboard: React.FC = () => {
           {/* Course Completion Chart */}
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Course Completion Status
+              {t("courseCompletionStatus")}
             </h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -127,7 +130,7 @@ const Dashboard: React.FC = () => {
           {/* Growth Trend Chart */}
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Growth Trends
+              {t("growthTrends")}
             </h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
@@ -157,7 +160,7 @@ const Dashboard: React.FC = () => {
         {/* Recent Activity */}
         <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Recent Activity
+            {t("recentActivity")}
           </h3>
           <div className="space-y-4">
             {[

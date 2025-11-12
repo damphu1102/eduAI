@@ -23,3 +23,13 @@ export interface DemoAccount {
   email: string;
   password: string;
 }
+
+export interface LanguageOption {
+  value: string;
+  label: string;
+}
+
+export interface DatetimeFormatOption {
+  value: string;
+  label: string;
+}

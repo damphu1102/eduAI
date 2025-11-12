@@ -1,6 +1,9 @@
-import React from 'react';
+import React from "react";
+import { useTranslation } from "../hooks/useTranslation";
 
 const NotFound: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative flex py-10 min-h-screen items-center justify-center overflow-hidden bg-black">
       <div className="mx-auto relative z-30 w-full max-w-[600px] text-center px-4">
@@ -111,16 +114,16 @@ const NotFound: React.FC = () => {
         </div>
 
         <h1 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
-          OPPS! Page Not Found
+          {t("pageNotFound")}
         </h1>
         <p className="mb-8 text-base text-white/60 sm:text-lg">
-          We can&apos;t seem to find the page you are looking for!
+          {t("pageNotFoundDesc")}
         </p>
         <a
-          href={typeof window !== 'undefined' ? window.location.origin : '/'}
+          href={typeof window !== "undefined" ? window.location.origin : "/"}
           className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
         >
-          Back to homepage
+          {t("backToHomepage")}
         </a>
 
         {/* Footer */}

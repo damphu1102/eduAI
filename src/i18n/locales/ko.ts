@@ -21,7 +21,6 @@ export const ko = {
   // Header
   search: "검색...",
   logout: "로그아웃",
-  administrator: "관리자",
 
   // Sidebar Navigation
   dashboard: "대시보드",
@@ -102,10 +101,10 @@ export const ko = {
   languageDesc: "시스템 인터페이스의 기본 언어 선택",
   timeZone: "시간대",
   timeZoneDesc: "모든 날짜와 시간이 이 시간대로 표시됩니다",
-  datetimeFormat: "날짜 시간 형식",
-  datetimeFormatDesc: "시스템 전체에서 날짜와 시간이 표시되는 방식 선택",
   preview: "미리보기:",
   currentTimeInTimezone: "시간대의 현재 시간:",
+  datetimeFormatAutoDesc:
+    "날짜 및 시간 형식은 선택한 시간대에 따라 자동으로 결정됩니다",
   settingsSaved: "언어 및 지역 설정이 성공적으로 저장되었습니다!",
 
   // Appearance
@@ -121,4 +120,123 @@ export const ko = {
   downloadData: "데이터 다운로드",
   exportAccount: "계정 정보 내보내기",
   deleteAccount: "계정 삭제",
+
+  // Home Page
+  welcomeToMeke: "Meke에 오신 것을 환영합니다!",
+  startBuilding: "여기서 멋진 프로젝트를 시작하세요!",
+
+  // Analytics & Reports - Additional
+  totalSize: "총 크기",
+  downloads: "다운로드",
+  categories: "카테고리",
+  searchDocuments: "문서 검색...",
+  all: "전체",
+  curriculum: "커리큘럼",
+  labManual: "실험 매뉴얼",
+  video: "비디오",
+  image: "이미지",
+  reference: "참고 자료",
+
+  // Course Management - Additional
+  createCourse: "코스 생성",
+  enrolledStudents: "등록된 학생",
+  avgCompletion: "평균 완료율",
+  lessons: "수업",
+  weeks: "주",
+  viewCourse: "코스 보기",
+
+  // Class Management - Additional
+  allClassesTable: "모든 클래스",
+
+  // Curriculum Management - Additional
+  totalPrograms: "총 프로그램",
+  inReview: "검토 중",
+  allCurricula: "모든 커리큘럼",
+  programName: "프로그램 이름",
+  gradeLevel: "학년",
+  lastUpdated: "마지막 업데이트",
+  review: "검토",
+
+  // Exam Management - Additional
+  scheduleExam: "시험 일정",
+  scheduled: "예정됨",
+  recentResults: "최근 결과",
+  exam: "시험",
+  highest: "최고점",
+  lowest: "최저점",
+
+  // Gamification & Grading - Additional
+  createAchievement: "업적 생성",
+  totalPointsAwarded: "총 수여 포인트",
+  achievementsUnlocked: "잠금 해제된 업적",
+  avgProgress: "평균 진행률",
+  topStudents: "우수 학생",
+  subjectProgress: "과목 진행률",
+  availableAchievements: "사용 가능한 업적",
+  studentsEarned: "명의 학생이 획득",
+  expert: "전문가",
+  advanced: "고급",
+  intermediate: "중급",
+  beginner: "초급",
+
+  // Users & Roles - Additional
+  manageRoles: "역할 관리",
+  addUser: "사용자 추가",
+  roles: "역할",
+  users: "사용자",
+  user: "사용자",
+  lastLogin: "마지막 로그인",
+  administrator: "관리자",
+  parent: "학부모",
+  teacher: "교사",
+  roleManagement: "역할 관리",
+  permissions: "권한",
+  editRole: "역할 편집",
+  fullAccess: "전체 액세스",
+  userManagement: "사용자 관리",
+  systemSettings: "시스템 설정",
+  gradeStudents: "학생 성적 평가",
+  viewReports: "보고서 보기",
+  viewCourses: "코스 보기",
+  submitAssignments: "과제 제출",
+  takeExams: "시험 응시",
+  viewChildProgress: "자녀 진행 상황 보기",
+  communication: "커뮤니케이션",
+  reports: "보고서",
+
+  // Document Library - Additional
+  document: "문서",
+
+  // Assignments & Games - Additional
+  createGame: "게임 생성",
+  completionRateShort: "완료율",
+  recentAssignmentsTable: "최근 과제",
+  assignment: "과제",
+  quiz: "퀴즈",
+  lab: "실험",
+  project: "프로젝트",
+  difficulty: "난이도",
+  easy: "쉬움",
+  medium: "보통",
+  hard: "어려움",
+  viewDetails: "세부 정보 보기",
+
+  // Analytics & Reports - Additional
+  enrollmentTrendsChart: "등록 추세",
+  subjectPerformanceChart: "과목 성과",
+  courseCompletionStatusChart: "코스 완료 상태",
+  dailyEngagementChart: "일일 참여도 (시간)",
+  detailedPerformanceReports: "상세 성과 보고서",
+  trend: "추세",
+
+  // Breadcrumb - Route names
+  class_management: "학급 관리",
+  curriculum_management: "커리큘럼 관리",
+  course_management: "과정 관리",
+  assignments_games: "과제 및 게임",
+  exam_management: "시험 관리",
+  document_library: "문서 라이브러리",
+  gamification_grading: "게임화 및 채점",
+  users_roles: "사용자 및 역할",
+  analytics_reports: "분석 및 보고서",
 };

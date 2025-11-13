@@ -21,7 +21,6 @@ export const zh = {
   // Header
   search: "搜索...",
   logout: "登出",
-  administrator: "管理员",
 
   // Sidebar Navigation
   dashboard: "仪表板",
@@ -101,10 +100,9 @@ export const zh = {
   languageDesc: "选择系统界面的首选语言",
   timeZone: "时区",
   timeZoneDesc: "所有日期和时间将以此时区显示",
-  datetimeFormat: "日期时间格式",
-  datetimeFormatDesc: "选择整个系统中日期和时间的显示方式",
   preview: "预览：",
   currentTimeInTimezone: "您时区的当前时间：",
+  datetimeFormatAutoDesc: "日期和时间格式根据所选时区自动确定",
   settingsSaved: "语言和地区设置已成功保存！",
 
   // Appearance
@@ -119,4 +117,123 @@ export const zh = {
   downloadData: "下载您的数据",
   exportAccount: "导出账户信息",
   deleteAccount: "删除账户",
+
+  // Home Page
+  welcomeToMeke: "欢迎来到Meke！",
+  startBuilding: "在这里开始构建您的精彩项目！",
+
+  // Analytics & Reports - Additional
+  totalSize: "总大小",
+  downloads: "下载次数",
+  categories: "类别",
+  searchDocuments: "搜索文档...",
+  all: "全部",
+  curriculum: "课程",
+  labManual: "实验手册",
+  video: "视频",
+  image: "图片",
+  reference: "参考资料",
+
+  // Course Management - Additional
+  createCourse: "创建课程",
+  enrolledStudents: "已注册学生",
+  avgCompletion: "平均完成率",
+  lessons: "课时",
+  weeks: "周",
+  viewCourse: "查看课程",
+
+  // Class Management - Additional
+  allClassesTable: "所有班级",
+
+  // Curriculum Management - Additional
+  totalPrograms: "总项目数",
+  inReview: "审核中",
+  allCurricula: "所有课程",
+  programName: "项目名称",
+  gradeLevel: "年级",
+  lastUpdated: "最后更新",
+  review: "审核",
+
+  // Exam Management - Additional
+  scheduleExam: "安排考试",
+  scheduled: "已安排",
+  recentResults: "最近结果",
+  exam: "考试",
+  highest: "最高分",
+  lowest: "最低分",
+
+  // Gamification & Grading - Additional
+  createAchievement: "创建成就",
+  totalPointsAwarded: "总授予积分",
+  achievementsUnlocked: "已解锁成就",
+  avgProgress: "平均进度",
+  topStudents: "优秀学生",
+  subjectProgress: "科目进度",
+  availableAchievements: "可用成就",
+  studentsEarned: "名学生获得",
+  expert: "专家",
+  advanced: "高级",
+  intermediate: "中级",
+  beginner: "初级",
+
+  // Users & Roles - Additional
+  manageRoles: "管理角色",
+  addUser: "添加用户",
+  roles: "角色",
+  users: "用户",
+  user: "用户",
+  lastLogin: "最后登录",
+  administrator: "管理员",
+  parent: "家长",
+  teacher: "教师",
+  roleManagement: "角色管理",
+  permissions: "权限",
+  editRole: "编辑角色",
+  fullAccess: "完全访问",
+  userManagement: "用户管理",
+  systemSettings: "系统设置",
+  gradeStudents: "给学生评分",
+  viewReports: "查看报告",
+  viewCourses: "查看课程",
+  submitAssignments: "提交作业",
+  takeExams: "参加考试",
+  viewChildProgress: "查看孩子进度",
+  communication: "沟通",
+  reports: "报告",
+
+  // Document Library - Additional
+  document: "文档",
+
+  // Assignments & Games - Additional
+  createGame: "创建游戏",
+  completionRateShort: "完成率",
+  recentAssignmentsTable: "最近作业",
+  assignment: "作业",
+  quiz: "测验",
+  lab: "实验",
+  project: "项目",
+  difficulty: "难度",
+  easy: "简单",
+  medium: "中等",
+  hard: "困难",
+  viewDetails: "查看详情",
+
+  // Analytics & Reports - Additional
+  enrollmentTrendsChart: "注册趋势",
+  subjectPerformanceChart: "科目表现",
+  courseCompletionStatusChart: "课程完成状态",
+  dailyEngagementChart: "每日参与度（小时）",
+  detailedPerformanceReports: "详细表现报告",
+  trend: "趋势",
+
+  // Breadcrumb - Route names
+  class_management: "班级管理",
+  curriculum_management: "课程管理",
+  course_management: "课程管理",
+  assignments_games: "作业与游戏",
+  exam_management: "考试管理",
+  document_library: "文档库",
+  gamification_grading: "游戏化与评分",
+  users_roles: "用户与角色",
+  analytics_reports: "分析与报告",
 };

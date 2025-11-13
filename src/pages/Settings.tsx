@@ -9,19 +9,12 @@ import { useTranslation } from "../hooks/useTranslation";
 const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const { t } = useTranslation();
-  const {
-    language,
-    timezone,
-    datetimeFormat,
-    setLanguage,
-    setTimezone,
-    setDatetimeFormat,
-  } = useSettings();
+  const { language, timezone, setLanguage, setTimezone, formatDateTime } =
+    useSettings();
 
   // Local state for temporary changes
   const [tempLanguage, setTempLanguage] = useState<Language>(language);
   const [tempTimezone, setTempTimezone] = useState(timezone);
-  const [tempDatetimeFormat, setTempDatetimeFormat] = useState(datetimeFormat);
 
   const languageOptions = [
     { value: "en", label: "English (Anh)" },
@@ -31,33 +24,9 @@ const Settings: React.FC = () => {
     { value: "ja", label: "日本語 (Nhật)" },
   ];
 
-  const datetimeFormatOptions = [
-    {
-      value: "DD/MM/YYYY HH:mm:ss",
-      label: "DD/MM/YYYY HH:mm:ss (31/12/2025 23:59:59)",
-    },
-    {
-      value: "MM/DD/YYYY HH:mm:ss",
-      label: "MM/DD/YYYY HH:mm:ss (12/31/2025 23:59:59)",
-    },
-    {
-      value: "YYYY-MM-DD HH:mm:ss",
-      label: "YYYY-MM-DD HH:mm:ss (2025-12-31 23:59:59)",
-    },
-    {
-      value: "DD/MM/YYYY hh:mm:ss A",
-      label: "DD/MM/YYYY hh:mm:ss A (31/12/2025 11:59:59 PM)",
-    },
-    {
-      value: "YYYY年MM月DD日 HH:mm:ss",
-      label: "YYYY年MM月DD日 HH:mm:ss (2025年12月31日 23:59:59)",
-    },
-  ];
-
   const handleSaveLanguageSettings = () => {
     setLanguage(tempLanguage);
     setTimezone(tempTimezone);
-    setDatetimeFormat(tempDatetimeFormat);
     toast.success(t("settingsSaved"));
   };
 
@@ -108,13 +77,13 @@ const Settings: React.FC = () => {
               {activeTab === "profile" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Profile Settings
+                    {t("profileSettings")}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name
+                        {t("fullName")}
                       </label>
                       <input
                         type="text"
@@ -125,7 +94,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
+                        {t("emailAddress")}
                       </label>
                       <input
                         type="email"
@@ -136,7 +105,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
+                        {t("phoneNumber")}
                       </label>
                       <input
                         type="tel"
@@ -147,7 +116,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Bio
+                        {t("bio")}
                       </label>
                       <textarea
                         rows={4}
@@ -157,7 +126,7 @@ const Settings: React.FC = () => {
                     </div>
 
                     <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Save Changes
+                      {t("saveChanges")}
                     </button>
                   </div>
                 </div>
@@ -166,28 +135,26 @@ const Settings: React.FC = () => {
               {activeTab === "notifications" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Notification Preferences
+                    {t("notificationPreferences")}
                   </h2>
 
                   <div className="space-y-4">
                     {[
                       {
-                        label: "Email Notifications",
-                        description: "Receive email updates about your account",
+                        label: t("emailNotifications"),
+                        description: t("emailNotificationsDesc"),
                       },
                       {
-                        label: "Push Notifications",
-                        description:
-                          "Receive push notifications on your device",
+                        label: t("pushNotifications"),
+                        description: t("pushNotificationsDesc"),
                       },
                       {
-                        label: "SMS Notifications",
-                        description:
-                          "Receive text messages for important updates",
+                        label: t("smsNotifications"),
+                        description: t("smsNotificationsDesc"),
                       },
                       {
-                        label: "Weekly Reports",
-                        description: "Get weekly summary of activities",
+                        label: t("weeklyReports"),
+                        description: t("weeklyReportsDesc"),
                       },
                     ].map((item, index) => (
                       <div
@@ -219,13 +186,13 @@ const Settings: React.FC = () => {
               {activeTab === "security" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Security Settings
+                    {t("securitySettings")}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Current Password
+                        {t("currentPassword")}
                       </label>
                       <input
                         type="password"
@@ -235,7 +202,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        New Password
+                        {t("newPassword")}
                       </label>
                       <input
                         type="password"
@@ -245,7 +212,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Confirm New Password
+                        {t("confirmNewPassword")}
                       </label>
                       <input
                         type="password"
@@ -254,18 +221,18 @@ const Settings: React.FC = () => {
                     </div>
 
                     <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Update Password
+                      {t("updatePassword")}
                     </button>
 
                     <div className="pt-6 border-t border-gray-200">
                       <h3 className="font-semibold text-gray-900 mb-4">
-                        Two-Factor Authentication
+                        {t("twoFactorAuth")}
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Add an extra layer of security to your account
+                        {t("twoFactorAuthDesc")}
                       </p>
                       <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                        Enable 2FA
+                        {t("enable2FA")}
                       </button>
                     </div>
                   </div>
@@ -321,26 +288,6 @@ const Settings: React.FC = () => {
                       </p>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t("datetimeFormat")}
-                      </label>
-                      <select
-                        value={tempDatetimeFormat}
-                        onChange={(e) => setTempDatetimeFormat(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      >
-                        {datetimeFormatOptions.map((format) => (
-                          <option key={format.value} value={format.value}>
-                            {format.label}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {t("datetimeFormatDesc")}
-                      </p>
-                    </div>
-
                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm font-medium text-blue-900 mb-1">
                         {t("preview")}
@@ -348,10 +295,11 @@ const Settings: React.FC = () => {
                       <p className="text-sm text-blue-700">
                         {t("currentTimeInTimezone")}{" "}
                         <span className="font-semibold">
-                          {new Date().toLocaleString("en-GB", {
-                            timeZone: tempTimezone,
-                          })}
+                          {formatDateTime(new Date())}
                         </span>
+                      </p>
+                      <p className="text-xs text-gray-600 mt-2">
+                        {t("datetimeFormatAutoDesc")}
                       </p>
                     </div>
 
@@ -368,16 +316,16 @@ const Settings: React.FC = () => {
               {activeTab === "appearance" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Appearance
+                    {t("appearance")}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Theme
+                        {t("theme")}
                       </label>
                       <div className="grid grid-cols-3 gap-4">
-                        {["Light", "Dark", "Auto"].map((theme) => (
+                        {[t("light"), t("dark"), t("auto")].map((theme) => (
                           <button
                             key={theme}
                             className="px-4 py-3 border-2 border-gray-300 rounded-lg hover:border-blue-500 transition-colors"
@@ -390,7 +338,7 @@ const Settings: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Accent Color
+                        {t("accentColor")}
                       </label>
                       <div className="flex space-x-3">
                         {[
@@ -409,7 +357,7 @@ const Settings: React.FC = () => {
                     </div>
 
                     <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                      Save Changes
+                      {t("saveChanges")}
                     </button>
                   </div>
                 </div>
@@ -418,26 +366,25 @@ const Settings: React.FC = () => {
               {activeTab === "data" && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">
-                    Data & Privacy
+                    {t("dataPrivacy")}
                   </h2>
 
                   <div className="space-y-4">
                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm text-blue-900">
-                        We take your privacy seriously. Your data is encrypted
-                        and stored securely.
+                        {t("privacyMessage")}
                       </p>
                     </div>
 
                     <div className="space-y-3">
                       <button className="w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                        Download Your Data
+                        {t("downloadData")}
                       </button>
                       <button className="w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                        Export Account Information
+                        {t("exportAccount")}
                       </button>
                       <button className="w-full px-6 py-3 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors text-left">
-                        Delete Account
+                        {t("deleteAccount")}
                       </button>
                     </div>
                   </div>

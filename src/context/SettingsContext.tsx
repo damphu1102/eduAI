@@ -5,11 +5,12 @@ export type Language = "en" | "vi" | "zh" | "ko" | "ja";
 export interface SettingsContextType {
   language: Language;
   timezone: string;
-  datetimeFormat: string;
   setLanguage: (lang: Language) => void;
   setTimezone: (tz: string) => void;
-  setDatetimeFormat: (format: string) => void;
   getCurrentDateTime: () => string;
+  getCurrentDateTimeWithWeekday: () => string;
+  formatDateTime: (date: Date) => string;
+  getWeekday: (date: Date) => string;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -27,10 +28,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     return localStorage.getItem("timezone") || "Asia/Ho_Chi_Minh";
   });
 
-  const [datetimeFormat, setDatetimeFormatState] = useState<string>(() => {
-    return localStorage.getItem("datetimeFormat") || "DD/MM/YYYY HH:mm:ss";
-  });
-
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("language", lang);
@@ -41,13 +38,20 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("timezone", tz);
   };
 
-  const setDatetimeFormat = (format: string) => {
-    setDatetimeFormatState(format);
-    localStorage.setItem("datetimeFormat", format);
+  // Helper function to get locale based on selected language
+  const getLocaleForLanguage = (): string => {
+    const localeMap: Record<Language, string> = {
+      en: "en-US",
+      vi: "vi-VN",
+      zh: "zh-CN",
+      ko: "ko-KR",
+      ja: "ja-JP",
+    };
+    return localeMap[language];
   };
 
-  const getCurrentDateTime = (): string => {
-    const now = new Date();
+  const formatDateTime = (date: Date): string => {
+    const locale = getLocaleForLanguage();
     const options: Intl.DateTimeFormatOptions = {
       timeZone: timezone,
       year: "numeric",
@@ -56,29 +60,31 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
-      hour12: false,
+      hour12: language === "en", // 12-hour format only for English
     };
 
-    const formatter = new Intl.DateTimeFormat("en-GB", options);
-    const parts = formatter.formatToParts(now);
+    return new Intl.DateTimeFormat(locale, options).format(date);
+  };
 
-    const getValue = (type: string) =>
-      parts.find((p) => p.type === type)?.value || "";
+  const getWeekday = (date: Date): string => {
+    const locale = getLocaleForLanguage();
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: timezone,
+      weekday: "long", // Full weekday name
+    };
 
-    const day = getValue("day");
-    const month = getValue("month");
-    const year = getValue("year");
-    const hour = getValue("hour");
-    const minute = getValue("minute");
-    const second = getValue("second");
+    return new Intl.DateTimeFormat(locale, options).format(date);
+  };
 
-    return datetimeFormat
-      .replace("DD", day)
-      .replace("MM", month)
-      .replace("YYYY", year)
-      .replace("HH", hour)
-      .replace("mm", minute)
-      .replace("ss", second);
+  const getCurrentDateTime = (): string => {
+    return formatDateTime(new Date());
+  };
+
+  const getCurrentDateTimeWithWeekday = (): string => {
+    const now = new Date();
+    const weekday = getWeekday(now);
+    const datetime = formatDateTime(now);
+    return `${weekday}, ${datetime}`;
   };
 
   return (
@@ -86,11 +92,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         language,
         timezone,
-        datetimeFormat,
         setLanguage,
         setTimezone,
-        setDatetimeFormat,
         getCurrentDateTime,
+        getCurrentDateTimeWithWeekday,
+        formatDateTime,
+        getWeekday,
       }}
     >
       {children}

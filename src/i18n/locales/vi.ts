@@ -21,7 +21,6 @@ export const vi = {
   // Header
   search: "Tìm kiếm...",
   logout: "Đăng xuất",
-  administrator: "Quản trị viên",
 
   // Sidebar Navigation
   dashboard: "Bảng điều khiển",
@@ -84,7 +83,6 @@ export const vi = {
   addNewClass: "Thêm lớp mới",
   allClasses: "Tất cả lớp học",
   className: "Tên lớp",
-  teacher: "Giáo viên",
   subjects: "Môn học",
   activeClasses: "Lớp đang hoạt động",
   active: "Hoạt động",
@@ -249,10 +247,10 @@ export const vi = {
   languageDesc: "Chọn ngôn ngữ ưa thích cho giao diện hệ thống",
   timeZone: "Múi giờ",
   timeZoneDesc: "Tất cả ngày và giờ sẽ được hiển thị theo múi giờ này",
-  datetimeFormat: "Định dạng ngày giờ",
-  datetimeFormatDesc: "Chọn cách hiển thị ngày và giờ trong toàn hệ thống",
   preview: "Xem trước:",
   currentTimeInTimezone: "Thời gian hiện tại theo múi giờ của bạn:",
+  datetimeFormatAutoDesc:
+    "Định dạng ngày giờ được tự động xác định dựa trên múi giờ đã chọn",
   settingsSaved: "Đã lưu cài đặt Ngôn ngữ & Khu vực thành công!",
 
   // Appearance
@@ -268,4 +266,123 @@ export const vi = {
   downloadData: "Tải xuống dữ liệu của bạn",
   exportAccount: "Xuất thông tin tài khoản",
   deleteAccount: "Xóa tài khoản",
+
+  // Home Page
+  welcomeToMeke: "Chào mừng đến với Meke!",
+  startBuilding: "Bắt đầu xây dựng dự án tuyệt vời của bạn tại đây!",
+
+  // Analytics & Reports - Additional
+  totalSize: "Tổng dung lượng",
+  downloads: "Lượt tải xuống",
+  categories: "Danh mục",
+  searchDocuments: "Tìm kiếm tài liệu...",
+  all: "Tất cả",
+  curriculum: "Chương trình học",
+  labManual: "Hướng dẫn thí nghiệm",
+  video: "Video",
+  image: "Hình ảnh",
+  reference: "Tài liệu tham khảo",
+
+  // Course Management - Additional
+  createCourse: "Tạo khóa học",
+  enrolledStudents: "Học sinh đã đăng ký",
+  avgCompletion: "Hoàn thành trung bình",
+  lessons: "Bài học",
+  weeks: "tuần",
+  viewCourse: "Xem khóa học",
+
+  // Class Management - Additional
+  allClassesTable: "Tất cả lớp học",
+
+  // Curriculum Management - Additional
+  totalPrograms: "Tổng số chương trình",
+  inReview: "Đang xem xét",
+  allCurricula: "Tất cả chương trình",
+  programName: "Tên chương trình",
+  gradeLevel: "Cấp độ",
+  lastUpdated: "Cập nhật lần cuối",
+  review: "Xem xét",
+
+  // Exam Management - Additional
+  scheduleExam: "Lên lịch thi",
+  scheduled: "Đã lên lịch",
+  recentResults: "Kết quả gần đây",
+  exam: "Bài thi",
+  highest: "Cao nhất",
+  lowest: "Thấp nhất",
+
+  // Gamification & Grading - Additional
+  createAchievement: "Tạo thành tích",
+  totalPointsAwarded: "Tổng điểm đã trao",
+  achievementsUnlocked: "Thành tích đã mở khóa",
+  avgProgress: "Tiến độ trung bình",
+  topStudents: "Học sinh xuất sắc",
+  subjectProgress: "Tiến độ môn học",
+  availableAchievements: "Thành tích có sẵn",
+  studentsEarned: "học sinh đạt được",
+  expert: "Chuyên gia",
+  advanced: "Nâng cao",
+  intermediate: "Trung cấp",
+  beginner: "Cơ bản",
+
+  // Users & Roles - Additional
+  manageRoles: "Quản lý vai trò",
+  addUser: "Thêm người dùng",
+  roles: "Vai trò",
+  users: "người dùng",
+  user: "Người dùng",
+  lastLogin: "Đăng nhập lần cuối",
+  administrator: "Quản trị viên",
+  parent: "Phụ huynh",
+  teacher: "Giáo viên",
+  roleManagement: "Quản lý vai trò",
+  permissions: "Quyền hạn",
+  editRole: "Chỉnh sửa vai trò",
+  fullAccess: "Toàn quyền truy cập",
+  userManagement: "Quản lý người dùng",
+  systemSettings: "Cài đặt hệ thống",
+  gradeStudents: "Chấm điểm học sinh",
+  viewReports: "Xem báo cáo",
+  viewCourses: "Xem khóa học",
+  submitAssignments: "Nộp bài tập",
+  takeExams: "Làm bài thi",
+  viewChildProgress: "Xem tiến độ con em",
+  communication: "Giao tiếp",
+  reports: "Báo cáo",
+
+  // Document Library - Additional
+  document: "Tài liệu",
+
+  // Assignments & Games - Additional
+  createGame: "Tạo trò chơi",
+  completionRateShort: "Tỷ lệ hoàn thành",
+  recentAssignmentsTable: "Bài tập gần đây",
+  assignment: "Bài tập",
+  quiz: "Bài kiểm tra",
+  lab: "Thí nghiệm",
+  project: "Dự án",
+  difficulty: "Độ khó",
+  easy: "Dễ",
+  medium: "Trung bình",
+  hard: "Khó",
+  viewDetails: "Xem chi tiết",
+
+  // Analytics & Reports - Additional
+  enrollmentTrendsChart: "Xu hướng đăng ký",
+  subjectPerformanceChart: "Hiệu suất môn học",
+  courseCompletionStatusChart: "Trạng thái hoàn thành khóa học",
+  dailyEngagementChart: "Tương tác hàng ngày (Giờ)",
+  detailedPerformanceReports: "Báo cáo hiệu suất chi tiết",
+  trend: "Xu hướng",
+
+  // Breadcrumb - Route names
+  class_management: "Quản lý lớp học",
+  curriculum_management: "Quản lý chương trình",
+  course_management: "Quản lý khóa học",
+  assignments_games: "Bài tập & Trò chơi",
+  exam_management: "Quản lý thi cử",
+  document_library: "Thư viện tài liệu",
+  gamification_grading: "Gamification & Chấm điểm",
+  users_roles: "Người dùng & Vai trò",
+  analytics_reports: "Phân tích & Báo cáo",
 };

@@ -21,7 +21,6 @@ export const ja = {
   // Header
   search: "検索...",
   logout: "ログアウト",
-  administrator: "管理者",
 
   // Sidebar Navigation
   dashboard: "ダッシュボード",
@@ -102,10 +101,10 @@ export const ja = {
   languageDesc: "システムインターフェースの優先言語を選択",
   timeZone: "タイムゾーン",
   timeZoneDesc: "すべての日付と時刻がこのタイムゾーンで表示されます",
-  datetimeFormat: "日時形式",
-  datetimeFormatDesc: "システム全体で日付と時刻の表示方法を選択",
   preview: "プレビュー：",
   currentTimeInTimezone: "タイムゾーンの現在時刻：",
+  datetimeFormatAutoDesc:
+    "日付と時刻の形式は、選択したタイムゾーンに基づいて自動的に決定されます",
   settingsSaved: "言語と地域の設定が正常に保存されました！",
 
   // Appearance
@@ -121,4 +120,123 @@ export const ja = {
   downloadData: "データをダウンロード",
   exportAccount: "アカウント情報をエクスポート",
   deleteAccount: "アカウントを削除",
+
+  // Home Page
+  welcomeToMeke: "Mekeへようこそ！",
+  startBuilding: "ここで素晴らしいプロジェクトを始めましょう！",
+
+  // Analytics & Reports - Additional
+  totalSize: "合計サイズ",
+  downloads: "ダウンロード数",
+  categories: "カテゴリ",
+  searchDocuments: "ドキュメントを検索...",
+  all: "すべて",
+  curriculum: "カリキュラム",
+  labManual: "実験マニュアル",
+  video: "ビデオ",
+  image: "画像",
+  reference: "参考資料",
+
+  // Course Management - Additional
+  createCourse: "コースを作成",
+  enrolledStudents: "登録学生",
+  avgCompletion: "平均完了率",
+  lessons: "レッスン",
+  weeks: "週",
+  viewCourse: "コースを表示",
+
+  // Class Management - Additional
+  allClassesTable: "すべてのクラス",
+
+  // Curriculum Management - Additional
+  totalPrograms: "総プログラム数",
+  inReview: "レビュー中",
+  allCurricula: "すべてのカリキュラム",
+  programName: "プログラム名",
+  gradeLevel: "学年",
+  lastUpdated: "最終更新",
+  review: "レビュー",
+
+  // Exam Management - Additional
+  scheduleExam: "試験をスケジュール",
+  scheduled: "予定済み",
+  recentResults: "最近の結果",
+  exam: "試験",
+  highest: "最高点",
+  lowest: "最低点",
+
+  // Gamification & Grading - Additional
+  createAchievement: "実績を作成",
+  totalPointsAwarded: "総授与ポイント",
+  achievementsUnlocked: "アンロックされた実績",
+  avgProgress: "平均進捗",
+  topStudents: "優秀な学生",
+  subjectProgress: "科目の進捗",
+  availableAchievements: "利用可能な実績",
+  studentsEarned: "人の学生が獲得",
+  expert: "エキスパート",
+  advanced: "上級",
+  intermediate: "中級",
+  beginner: "初級",
+
+  // Users & Roles - Additional
+  manageRoles: "役割を管理",
+  addUser: "ユーザーを追加",
+  roles: "役割",
+  users: "ユーザー",
+  user: "ユーザー",
+  lastLogin: "最終ログイン",
+  administrator: "管理者",
+  parent: "保護者",
+  teacher: "教師",
+  roleManagement: "役割管理",
+  permissions: "権限",
+  editRole: "役割を編集",
+  fullAccess: "フルアクセス",
+  userManagement: "ユーザー管理",
+  systemSettings: "システム設定",
+  gradeStudents: "学生を評価",
+  viewReports: "レポートを表示",
+  viewCourses: "コースを表示",
+  submitAssignments: "課題を提出",
+  takeExams: "試験を受ける",
+  viewChildProgress: "子供の進捗を表示",
+  communication: "コミュニケーション",
+  reports: "レポート",
+
+  // Document Library - Additional
+  document: "ドキュメント",
+
+  // Assignments & Games - Additional
+  createGame: "ゲームを作成",
+  completionRateShort: "完了率",
+  recentAssignmentsTable: "最近の課題",
+  assignment: "課題",
+  quiz: "クイズ",
+  lab: "実験",
+  project: "プロジェクト",
+  difficulty: "難易度",
+  easy: "簡単",
+  medium: "普通",
+  hard: "難しい",
+  viewDetails: "詳細を表示",
+
+  // Analytics & Reports - Additional
+  enrollmentTrendsChart: "登録トレンド",
+  subjectPerformanceChart: "科目のパフォーマンス",
+  courseCompletionStatusChart: "コース完了状況",
+  dailyEngagementChart: "毎日のエンゲージメント（時間）",
+  detailedPerformanceReports: "詳細なパフォーマンスレポート",
+  trend: "トレンド",
+
+  // Breadcrumb - Route names
+  class_management: "クラス管理",
+  curriculum_management: "カリキュラム管理",
+  course_management: "コース管理",
+  assignments_games: "課題とゲーム",
+  exam_management: "試験管理",
+  document_library: "ドキュメントライブラリ",
+  gamification_grading: "ゲーミフィケーションと採点",
+  users_roles: "ユーザーと役割",
+  analytics_reports: "分析とレポート",
 };

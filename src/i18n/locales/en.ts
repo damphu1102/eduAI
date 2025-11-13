@@ -21,7 +21,6 @@ export const en = {
   // Header
   search: "Search...",
   logout: "Logout",
-  administrator: "Administrator",
 
   // Sidebar Navigation
   dashboard: "Dashboard",
@@ -84,7 +83,6 @@ export const en = {
   addNewClass: "Add New Class",
   allClasses: "All Classes",
   className: "Class Name",
-  teacher: "Teacher",
   subjects: "Subjects",
   activeClasses: "Active Classes",
   active: "Active",
@@ -250,11 +248,10 @@ export const en = {
   languageDesc: "Select your preferred language for the system interface",
   timeZone: "Time Zone",
   timeZoneDesc: "All dates and times will be displayed in this timezone",
-  datetimeFormat: "Datetime Format",
-  datetimeFormatDesc:
-    "Choose how dates and times are displayed throughout the system",
   preview: "Preview:",
   currentTimeInTimezone: "Current time in your timezone:",
+  datetimeFormatAutoDesc:
+    "Date and time format is automatically determined based on the selected timezone",
   settingsSaved: "Language & Region settings saved successfully!",
 
   // Appearance
@@ -270,4 +267,123 @@ export const en = {
   downloadData: "Download Your Data",
   exportAccount: "Export Account Information",
   deleteAccount: "Delete Account",
+
+  // Home Page
+  welcomeToMeke: "Welcome to Meke!",
+  startBuilding: "Start building your amazing project here!",
+
+  // Analytics & Reports - Additional
+  totalSize: "Total Size",
+  downloads: "Downloads",
+  categories: "Categories",
+  searchDocuments: "Search documents...",
+  all: "All",
+  curriculum: "Curriculum",
+  labManual: "Lab Manual",
+  video: "Video",
+  image: "Image",
+  reference: "Reference",
+
+  // Course Management - Additional
+  createCourse: "Create Course",
+  enrolledStudents: "Enrolled Students",
+  avgCompletion: "Avg. Completion",
+  lessons: "Lessons",
+  weeks: "weeks",
+  viewCourse: "View Course",
+
+  // Class Management - Additional
+  allClassesTable: "All Classes",
+
+  // Curriculum Management - Additional
+  totalPrograms: "Total Programs",
+  inReview: "In Review",
+  allCurricula: "All Curricula",
+  programName: "Program Name",
+  gradeLevel: "Grade Level",
+  lastUpdated: "Last Updated",
+  review: "Review",
+
+  // Exam Management - Additional
+  scheduleExam: "Schedule Exam",
+  scheduled: "Scheduled",
+  recentResults: "Recent Results",
+  exam: "Exam",
+  highest: "Highest",
+  lowest: "Lowest",
+
+  // Gamification & Grading - Additional
+  createAchievement: "Create Achievement",
+  totalPointsAwarded: "Total Points Awarded",
+  achievementsUnlocked: "Achievements Unlocked",
+  avgProgress: "Avg Progress",
+  topStudents: "Top Students",
+  subjectProgress: "Subject Progress",
+  availableAchievements: "Available Achievements",
+  studentsEarned: "students earned",
+  expert: "Expert",
+  advanced: "Advanced",
+  intermediate: "Intermediate",
+  beginner: "Beginner",
+
+  // Users & Roles - Additional
+  manageRoles: "Manage Roles",
+  addUser: "Add User",
+  roles: "Roles",
+  users: "users",
+  user: "User",
+  lastLogin: "Last Login",
+  administrator: "Administrator",
+  parent: "Parent",
+  teacher: "Teacher",
+  roleManagement: "Role Management",
+  permissions: "Permissions",
+  editRole: "Edit Role",
+  fullAccess: "Full Access",
+  userManagement: "User Management",
+  systemSettings: "System Settings",
+  gradeStudents: "Grade Students",
+  viewReports: "View Reports",
+  viewCourses: "View Courses",
+  submitAssignments: "Submit Assignments",
+  takeExams: "Take Exams",
+  viewChildProgress: "View Child Progress",
+  communication: "Communication",
+  reports: "Reports",
+
+  // Document Library - Additional
+  document: "Document",
+
+  // Assignments & Games - Additional
+  createGame: "Create Game",
+  completionRateShort: "Completion Rate",
+  recentAssignmentsTable: "Recent Assignments",
+  assignment: "Assignment",
+  quiz: "Quiz",
+  lab: "Lab",
+  project: "Project",
+  difficulty: "Difficulty",
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
+  viewDetails: "View Details",
+
+  // Analytics & Reports - Additional
+  enrollmentTrendsChart: "Enrollment Trends",
+  subjectPerformanceChart: "Subject Performance",
+  courseCompletionStatusChart: "Course Completion Status",
+  dailyEngagementChart: "Daily Engagement (Hours)",
+  detailedPerformanceReports: "Detailed Performance Reports",
+  trend: "Trend",
+
+  // Breadcrumb - Route names
+  class_management: "Class Management",
+  curriculum_management: "Curriculum Management",
+  course_management: "Course Management",
+  assignments_games: "Assignments & Games",
+  exam_management: "Exam Management",
+  document_library: "Document Library",
+  gamification_grading: "Gamification & Grading",
+  users_roles: "Users & Roles",
+  analytics_reports: "Analytics & Reports",
 };

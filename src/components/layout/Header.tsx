@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Search, Bell, User, LogOut, Menu, Clock } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import {
+  Search,
+  Bell,
+  User,
+  LogOut,
+  Menu,
+  Clock,
+  ChevronRight,
+  Home,
+} from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSettings } from "../../context/SettingsContext";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -15,18 +24,50 @@ const Header: React.FC<HeaderProps> = ({
   setIsMobileMenuOpen,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const { t } = useTranslation();
-  const { getCurrentDateTime } = useSettings();
-  const [currentTime, setCurrentTime] = useState(getCurrentDateTime());
+  const { getCurrentDateTimeWithWeekday } = useSettings();
+  const [currentTime, setCurrentTime] = useState(
+    getCurrentDateTimeWithWeekday()
+  );
+
+  // Generate breadcrumb from current path
+  const getBreadcrumbs = () => {
+    const pathnames = location.pathname.split("/").filter((x) => x);
+
+    const breadcrumbs = [{ name: t("dashboard"), path: "/" }];
+
+    pathnames.forEach((value, index) => {
+      const path = `/${pathnames.slice(0, index + 1).join("/")}`;
+      const key = value.replace(/-/g, "_");
+
+      // Try to get translation, fallback to formatted value
+      try {
+        const name = t(key as any);
+        breadcrumbs.push({ name, path });
+      } catch {
+        // Fallback: capitalize and replace underscores with spaces
+        const name = key
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+        breadcrumbs.push({ name, path });
+      }
+    });
+
+    return breadcrumbs;
+  };
+
+  const breadcrumbs = getBreadcrumbs();
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(getCurrentDateTime());
+      setCurrentTime(getCurrentDateTimeWithWeekday());
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [getCurrentDateTime]);
+  }, [getCurrentDateTimeWithWeekday]);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -58,6 +99,26 @@ const Header: React.FC<HeaderProps> = ({
             />
           </div>
         </div>
+
+        {/* Center - Breadcrumb Navigation */}
+        <nav className="hidden xl:flex items-center space-x-2 flex-1 justify-center px-4">
+          {breadcrumbs.map((crumb, index) => (
+            <React.Fragment key={crumb.path}>
+              {index > 0 && <ChevronRight className="w-4 h-4 text-gray-400" />}
+              <button
+                onClick={() => navigate(crumb.path)}
+                className={`flex items-center space-x-1 px-2 py-1 rounded-md transition-colors ${
+                  index === breadcrumbs.length - 1
+                    ? "text-emerald-600 font-medium bg-emerald-50"
+                    : "text-gray-600 hover:text-emerald-600 hover:bg-gray-50"
+                }`}
+              >
+                {index === 0 && <Home className="w-4 h-4" />}
+                <span className="text-sm">{crumb.name}</span>
+              </button>
+            </React.Fragment>
+          ))}
+        </nav>
 
         {/* Right side - DateTime, Notifications and User */}
         <div className="flex items-center space-x-2 md:space-x-4">

@@ -242,4 +242,22 @@ export const ko = {
 
   // Toast Messages
   logoutSuccess: "성공적으로 로그아웃되었습니다.",
+
+  // Login Page
+  signIn: "로그인",
+  accessDashboard: "대시보드 액세스",
+  demoAccount: "데모 계정",
+  clickToFill: "클릭하여 입력",
+  loginEmail: "이메일 주소",
+  emailPlaceholder: "your@email.com",
+  loginPassword: "비밀번호",
+  passwordPlaceholder: "비밀번호 입력",
+  keepSignedIn: "로그인 상태 유지",
+  resetPassword: "비밀번호 재설정",
+  signInButton: "계정에 로그인",
+  signingIn: "로그인 중...",
+  newToPlatform: "플랫폼이 처음이신가요?",
+  createAccount: "계정 만들기",
+  loginSuccess: "로그인 성공! 환영합니다.",
+  loginError: "이메일 또는 비밀번호가 잘못되었습니다. 다시 시도해주세요.",
 };

@@ -242,4 +242,23 @@ export const ja = {
 
   // Toast Messages
   logoutSuccess: "正常にログアウトしました。",
+
+  // Login Page
+  signIn: "サインイン",
+  accessDashboard: "ダッシュボードにアクセス",
+  demoAccount: "デモアカウント",
+  clickToFill: "クリックして入力",
+  loginEmail: "メールアドレス",
+  emailPlaceholder: "your@email.com",
+  loginPassword: "パスワード",
+  passwordPlaceholder: "パスワードを入力",
+  keepSignedIn: "サインインを維持",
+  resetPassword: "パスワードをリセット",
+  signInButton: "アカウントにサインイン",
+  signingIn: "サインイン中...",
+  newToPlatform: "プラットフォームは初めてですか？",
+  createAccount: "アカウントを作成",
+  loginSuccess: "ログイン成功！お帰りなさい。",
+  loginError:
+    "メールアドレスまたはパスワードが無効です。もう一度お試しください。",
 };

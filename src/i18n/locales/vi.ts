@@ -67,6 +67,7 @@ export const vi = {
   keepSignedIn: "Giữ đăng nhập",
   resetPassword: "Đặt lại mật khẩu",
   signInButton: "Đăng nhập vào tài khoản",
+  signingIn: "Đang đăng nhập...",
   newToPlatform: "Mới tham gia nền tảng?",
   createAccount: "Tạo tài khoản",
   loginSuccess: "Đăng nhập thành công! Chào mừng trở lại.",

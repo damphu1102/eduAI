@@ -239,4 +239,22 @@ export const zh = {
 
   // Toast Messages
   logoutSuccess: "您已成功退出登录。",
+
+  // Login Page
+  signIn: "登录",
+  accessDashboard: "访问仪表板",
+  demoAccount: "演示账户",
+  clickToFill: "点击填充",
+  loginEmail: "电子邮件地址",
+  emailPlaceholder: "your@email.com",
+  loginPassword: "密码",
+  passwordPlaceholder: "输入密码",
+  keepSignedIn: "保持登录状态",
+  resetPassword: "重置密码",
+  signInButton: "登录您的账户",
+  signingIn: "登录中...",
+  newToPlatform: "第一次使用我们的平台？",
+  createAccount: "创建账户",
+  loginSuccess: "登录成功！欢迎回来。",
+  loginError: "电子邮件或密码无效。请重试。",
 };

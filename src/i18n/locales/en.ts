@@ -67,6 +67,7 @@ export const en = {
   keepSignedIn: "Keep me signed in",
   resetPassword: "Reset password",
   signInButton: "Sign in to your account",
+  signingIn: "Signing in...",
   newToPlatform: "New to our platform?",
   createAccount: "Create an account",
   loginSuccess: "Login successful! Welcome back.",

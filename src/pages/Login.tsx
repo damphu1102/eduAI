@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Particles from "../components/common/Particles";
 import { useTranslation } from "../hooks/useTranslation";
+import authService from "../services/authService";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const demoAccount = {
     role: "Admin",
@@ -27,17 +29,38 @@ const Login: React.FC = () => {
     setPassword(demoPassword);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate credentials
-    if (email === demoAccount.email && password === demoAccount.password) {
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("userEmail", email);
-      toast.success(t("loginSuccess"));
-      navigate("/");
-    } else {
+    if (!email || !password) {
       toast.error(t("loginError"));
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await authService.login({ email, password });
+
+      if (response.success) {
+        // Save authentication data
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userEmail", response.data.user.email);
+        localStorage.setItem("userName", response.data.user.full_name);
+        localStorage.setItem("userRole", response.data.user.role);
+
+        toast.success(t("loginSuccess"));
+        navigate("/");
+      } else {
+        toast.error(response.message || t("loginError"));
+      }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      const errorMessage = error.response?.data?.message || t("loginError");
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -177,9 +200,12 @@ const Login: React.FC = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-emerald-600 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200 hover:scale-[1.01] shadow-lg"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-emerald-600 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-200 hover:scale-[1.01] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              {t("signInButton")}
+              {isLoading
+                ? t("signingIn") || "Signing in..."
+                : t("signInButton")}
             </button>
           </form>
 

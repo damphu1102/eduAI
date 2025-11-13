@@ -386,4 +386,7 @@ export const en = {
   gamification_grading: "Gamification & Grading",
   users_roles: "Users & Roles",
   analytics_reports: "Analytics & Reports",
+
+  // Toast Messages
+  logoutSuccess: "You have been logged out successfully.",
 };

@@ -239,4 +239,7 @@ export const ko = {
   gamification_grading: "게임화 및 채점",
   users_roles: "사용자 및 역할",
   analytics_reports: "분석 및 보고서",
+
+  // Toast Messages
+  logoutSuccess: "성공적으로 로그아웃되었습니다.",
 };

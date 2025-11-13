@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("userEmail");
-    toast.info("You have been logged out successfully.");
+    toast.info(t("logoutSuccess"));
     navigate("/login");
   };
 

@@ -239,4 +239,7 @@ export const ja = {
   gamification_grading: "ゲーミフィケーションと採点",
   users_roles: "ユーザーと役割",
   analytics_reports: "分析とレポート",
+
+  // Toast Messages
+  logoutSuccess: "正常にログアウトしました。",
 };

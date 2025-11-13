@@ -385,4 +385,7 @@ export const vi = {
   gamification_grading: "Gamification & Chấm điểm",
   users_roles: "Người dùng & Vai trò",
   analytics_reports: "Phân tích & Báo cáo",
+
+  // Toast Messages
+  logoutSuccess: "Bạn đã đăng xuất thành công.",
 };

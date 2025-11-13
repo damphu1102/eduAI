@@ -236,4 +236,7 @@ export const zh = {
   gamification_grading: "游戏化与评分",
   users_roles: "用户与角色",
   analytics_reports: "分析与报告",
+
+  // Toast Messages
+  logoutSuccess: "您已成功退出登录。",
 };

@@ -403,8 +403,6 @@ export const vi = {
   classActivityDesc: "Theo dõi tất cả hoạt động trong lớp học",
   totalActivities: "Tổng hoạt động",
   thisWeek: "Tuần này",
-  activeUsers: "Người dùng hoạt động",
-  recentActivity: "Hoạt động gần đây",
 
   // Class Schedule
   classSchedule: "Lịch học",

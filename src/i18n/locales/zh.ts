@@ -257,4 +257,85 @@ export const zh = {
   createAccount: "创建账户",
   loginSuccess: "登录成功！欢迎回来。",
   loginError: "电子邮件或密码无效。请重试。",
+
+  // Class Management Tabs
+  classList: "班级列表",
+  schedule: "课程表",
+  activity: "活动",
+  grades: "成绩",
+  members: "成员",
+  certificates: "证书",
+
+  // Class Activity
+  classActivity: "班级活动",
+  classActivityDesc: "跟踪班级中的所有活动",
+  totalActivities: "总活动数",
+  thisWeek: "本周",
+
+  // Class Schedule
+  classSchedule: "课程表",
+  classScheduleDesc: "管理课程表和时间表",
+  addSchedule: "添加课程",
+
+  // Class Attendance
+  attendanceDesc: "跟踪学生出勤",
+  takeAttendance: "点名",
+  present: "出席",
+  absent: "缺席",
+  late: "迟到",
+  todayAttendance: "今日出勤",
+  time: "时间",
+
+  // Class Assignments
+  assignments: "作业",
+  assignmentsDesc: "管理作业和提交",
+  allAssignments: "所有作业",
+
+  // Class Grades
+  gradesDesc: "查看和管理学生成绩",
+  classAverage: "班级平均分",
+  studentGrades: "学生成绩",
+  average: "平均",
+  math: "数学",
+  physics: "物理",
+  chemistry: "化学",
+
+  // Class Notifications
+  notificationsDesc: "管理班级通知",
+  sendNotification: "发送通知",
+  total: "总计",
+  unread: "未读",
+  allNotifications: "所有通知",
+
+  // Class Members
+  classMembers: "班级成员",
+  classMembersDesc: "管理学生和教师",
+  addMember: "添加成员",
+  totalMembers: "总成员数",
+  teachers: "教师",
+  allMembers: "所有成员",
+
+  // Class Certificates
+  certificatesDesc: "管理证书和奖状",
+  issueCertificate: "颁发证书",
+  totalIssued: "已颁发",
+  thisMonth: "本月",
+  pending: "待处理",
+  allCertificates: "所有证书",
+  certificateName: "证书名称",
+  issueDate: "颁发日期",
+  issued: "已颁发",
+  course: "课程",
+
+  // Class Settings
+  classSettings: "班级设置",
+  classSettingsDesc: "管理班级设置和隐私",
+  generalSettings: "常规设置",
+  privacySettings: "隐私设置",
+  publicClass: "公开班级",
+  publicClassDesc: "允许所有人查看此班级",
+  requireApproval: "需要批准",
+  requireApprovalDesc: "加入前批准学生",
+  allowInvites: "允许邀请",
+  allowInvitesDesc: "成员可以邀请其他人",
 };

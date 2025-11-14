@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -13,6 +13,15 @@ import {
   BarChart3,
   Settings,
   X,
+  ChevronDown,
+  ChevronRight,
+  List,
+  Calendar,
+  Activity,
+  CheckSquare,
+  BarChart3 as BarChartIcon,
+  Bell,
+  Award,
 } from "lucide-react";
 import { useTranslation } from "../../hooks/useTranslation";
 
@@ -26,10 +35,61 @@ const Sidebar: React.FC<SidebarProps> = ({
   setIsMobileMenuOpen,
 }) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const [isClassMenuOpen, setIsClassMenuOpen] = useState(
+    location.pathname.startsWith("/class-management")
+  );
+
+  const classSubMenuItems = [
+    { path: "/class-management?tab=list", icon: List, label: t("classList") },
+    {
+      path: "/class-management?tab=schedule",
+      icon: Calendar,
+      label: t("schedule"),
+    },
+    {
+      path: "/class-management?tab=activity",
+      icon: Activity,
+      label: t("activity"),
+    },
+    {
+      path: "/class-management?tab=attendance",
+      icon: CheckSquare,
+      label: t("attendance"),
+    },
+    {
+      path: "/class-management?tab=assignments",
+      icon: FileText,
+      label: t("assignments"),
+    },
+    {
+      path: "/class-management?tab=grades",
+      icon: BarChartIcon,
+      label: t("grades"),
+    },
+    {
+      path: "/class-management?tab=notifications",
+      icon: Bell,
+      label: t("notifications"),
+    },
+    {
+      path: "/class-management?tab=members",
+      icon: Users,
+      label: t("members"),
+    },
+    {
+      path: "/class-management?tab=certificates",
+      icon: Award,
+      label: t("certificates"),
+    },
+    {
+      path: "/class-management?tab=settings",
+      icon: Settings,
+      label: t("settings"),
+    },
+  ];
 
   const menuItems = [
-    { path: "/", icon: LayoutDashboard, label: t("dashboard") },
-    { path: "/class-management", icon: Users, label: t("classManagement") },
     {
       path: "/curriculum-management",
       icon: BookOpen,
@@ -101,6 +161,73 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {/* Dashboard */}
+            <NavLink
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                  isActive
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-gray-600 hover:bg-emerald-50/50 hover:text-gray-900"
+                }`
+              }
+            >
+              <LayoutDashboard className="w-5 h-5 mr-3" />
+              {t("dashboard")}
+            </NavLink>
+
+            {/* Class Management with Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsClassMenuOpen(!isClassMenuOpen)}
+                className={`w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                  location.pathname.startsWith("/class-management")
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-gray-600 hover:bg-emerald-50/50 hover:text-gray-900"
+                }`}
+              >
+                <div className="flex items-center">
+                  <Users className="w-5 h-5 mr-3" />
+                  {t("classManagement")}
+                </div>
+                {isClassMenuOpen ? (
+                  <ChevronDown className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
+              </button>
+
+              {/* Submenu */}
+              {isClassMenuOpen && (
+                <div className="ml-4 mt-2 space-y-1 border-l-2 border-emerald-200 pl-4">
+                  {classSubMenuItems.map((subItem) => (
+                    <NavLink
+                      key={subItem.path}
+                      to={subItem.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={() => {
+                        const isActive =
+                          location.pathname === "/class-management" &&
+                          location.search === subItem.path.split("?")[1]
+                            ? `?${subItem.path.split("?")[1]}`
+                            : "";
+                        return `flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                          isActive
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "text-gray-600 hover:bg-emerald-50/50 hover:text-gray-900"
+                        }`;
+                      }}
+                    >
+                      <subItem.icon className="w-4 h-4 mr-2" />
+                      {subItem.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other menu items */}
             {menuItems.map((item) => (
               <NavLink
                 key={item.path}

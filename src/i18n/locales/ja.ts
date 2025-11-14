@@ -261,4 +261,85 @@ export const ja = {
   loginSuccess: "ログイン成功！お帰りなさい。",
   loginError:
     "メールアドレスまたはパスワードが無効です。もう一度お試しください。",
+
+  // Class Management Tabs
+  classList: "クラス一覧",
+  schedule: "スケジュール",
+  activity: "アクティビティ",
+  grades: "成績",
+  members: "メンバー",
+  certificates: "証明書",
+
+  // Class Activity
+  classActivity: "クラスアクティビティ",
+  classActivityDesc: "クラス内のすべてのアクティビティを追跡",
+  totalActivities: "総アクティビティ数",
+  thisWeek: "今週",
+
+  // Class Schedule
+  classSchedule: "授業スケジュール",
+  classScheduleDesc: "授業スケジュールと時間割を管理",
+  addSchedule: "スケジュール追加",
+
+  // Class Attendance
+  attendanceDesc: "生徒の出席を追跡",
+  takeAttendance: "出席を取る",
+  present: "出席",
+  absent: "欠席",
+  late: "遅刻",
+  todayAttendance: "今日の出席",
+  time: "時間",
+
+  // Class Assignments
+  assignments: "課題",
+  assignmentsDesc: "課題と提出物を管理",
+  allAssignments: "すべての課題",
+
+  // Class Grades
+  gradesDesc: "生徒の成績を表示・管理",
+  classAverage: "クラス平均",
+  studentGrades: "生徒の成績",
+  average: "平均",
+  math: "数学",
+  physics: "物理",
+  chemistry: "化学",
+
+  // Class Notifications
+  notificationsDesc: "クラス通知を管理",
+  sendNotification: "通知を送信",
+  total: "合計",
+  unread: "未読",
+  allNotifications: "すべての通知",
+
+  // Class Members
+  classMembers: "クラスメンバー",
+  classMembersDesc: "生徒と教師を管理",
+  addMember: "メンバー追加",
+  totalMembers: "総メンバー数",
+  teachers: "教師",
+  allMembers: "すべてのメンバー",
+
+  // Class Certificates
+  certificatesDesc: "証明書と賞状を管理",
+  issueCertificate: "証明書発行",
+  totalIssued: "発行済み",
+  thisMonth: "今月",
+  pending: "保留中",
+  allCertificates: "すべての証明書",
+  certificateName: "証明書名",
+  issueDate: "発行日",
+  issued: "発行済み",
+  course: "コース",
+
+  // Class Settings
+  classSettings: "クラス設定",
+  classSettingsDesc: "クラス設定とプライバシーを管理",
+  generalSettings: "一般設定",
+  privacySettings: "プライバシー設定",
+  publicClass: "公開クラス",
+  publicClassDesc: "すべての人がこのクラスを表示できるようにする",
+  requireApproval: "承認が必要",
+  requireApprovalDesc: "参加前に生徒を承認",
+  allowInvites: "招待を許可",
+  allowInvitesDesc: "メンバーが他の人を招待できる",
 };

@@ -260,4 +260,85 @@ export const ko = {
   createAccount: "계정 만들기",
   loginSuccess: "로그인 성공! 환영합니다.",
   loginError: "이메일 또는 비밀번호가 잘못되었습니다. 다시 시도해주세요.",
+
+  // Class Management Tabs
+  classList: "클래스 목록",
+  schedule: "일정",
+  activity: "활동",
+  grades: "성적",
+  members: "구성원",
+  certificates: "인증서",
+
+  // Class Activity
+  classActivity: "클래스 활동",
+  classActivityDesc: "클래스의 모든 활동 추적",
+  totalActivities: "총 활동",
+  thisWeek: "이번 주",
+
+  // Class Schedule
+  classSchedule: "수업 일정",
+  classScheduleDesc: "수업 일정 및 시간표 관리",
+  addSchedule: "일정 추가",
+
+  // Class Attendance
+  attendanceDesc: "학생 출석 추적",
+  takeAttendance: "출석 체크",
+  present: "출석",
+  absent: "결석",
+  late: "지각",
+  todayAttendance: "오늘의 출석",
+  time: "시간",
+
+  // Class Assignments
+  assignments: "과제",
+  assignmentsDesc: "과제 및 제출물 관리",
+  allAssignments: "모든 과제",
+
+  // Class Grades
+  gradesDesc: "학생 성적 보기 및 관리",
+  classAverage: "학급 평균",
+  studentGrades: "학생 성적",
+  average: "평균",
+  math: "수학",
+  physics: "물리",
+  chemistry: "화학",
+
+  // Class Notifications
+  notificationsDesc: "클래스 알림 관리",
+  sendNotification: "알림 보내기",
+  total: "전체",
+  unread: "읽지 않음",
+  allNotifications: "모든 알림",
+
+  // Class Members
+  classMembers: "클래스 구성원",
+  classMembersDesc: "학생 및 교사 관리",
+  addMember: "구성원 추가",
+  totalMembers: "총 구성원",
+  teachers: "교사",
+  allMembers: "모든 구성원",
+
+  // Class Certificates
+  certificatesDesc: "인증서 및 상장 관리",
+  issueCertificate: "인증서 발급",
+  totalIssued: "총 발급",
+  thisMonth: "이번 달",
+  pending: "대기 중",
+  allCertificates: "모든 인증서",
+  certificateName: "인증서 이름",
+  issueDate: "발급일",
+  issued: "발급됨",
+  course: "과정",
+
+  // Class Settings
+  classSettings: "클래스 설정",
+  classSettingsDesc: "클래스 설정 및 개인정보 관리",
+  generalSettings: "일반 설정",
+  privacySettings: "개인정보 설정",
+  publicClass: "공개 클래스",
+  publicClassDesc: "모든 사람이 이 클래스를 볼 수 있도록 허용",
+  requireApproval: "승인 필요",
+  requireApprovalDesc: "가입 전 학생 승인",
+  allowInvites: "초대 허용",
+  allowInvitesDesc: "구성원이 다른 사람을 초대할 수 있음",
 };

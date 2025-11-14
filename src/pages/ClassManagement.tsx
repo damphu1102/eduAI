@@ -1,198 +1,134 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import { Plus, Edit, Trash2, Users, BookOpen } from "lucide-react";
 import { useTranslation } from "../hooks/useTranslation";
+import ClassList from "./class/ClassList";
+import ClassSchedule from "./class/ClassSchedule";
+import ClassActivity from "./class/ClassActivity";
+import ClassAttendance from "./class/ClassAttendance";
+import ClassAssignments from "./class/ClassAssignments";
+import ClassGrades from "./class/ClassGrades";
+import ClassNotifications from "./class/ClassNotifications";
+import ClassMembers from "./class/ClassMembers";
+import ClassCertificates from "./class/ClassCertificates";
+import ClassSettings from "./class/ClassSettings";
+
+type TabType =
+  | "list"
+  | "schedule"
+  | "activity"
+  | "attendance"
+  | "assignments"
+  | "grades"
+  | "notifications"
+  | "members"
+  | "certificates"
+  | "settings";
 
 const ClassManagement: React.FC = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const activeTab = (searchParams.get("tab") as TabType) || "list";
 
-  const classes = [
-    {
-      id: 1,
-      name: "Mathematics 10A",
-      students: 32,
-      teacher: "Dr. Smith",
-      status: t("active"),
-      subjects: 5,
-    },
-    {
-      id: 2,
-      name: "Physics 11B",
-      students: 28,
-      teacher: "Prof. Johnson",
-      status: t("active"),
-      subjects: 4,
-    },
-    {
-      id: 3,
-      name: "Chemistry 12C",
-      students: 25,
-      teacher: "Dr. Brown",
-      status: t("inactive"),
-      subjects: 6,
-    },
-    {
-      id: 4,
-      name: "Biology 9A",
-      students: 30,
-      teacher: "Ms. Davis",
-      status: t("active"),
-      subjects: 3,
-    },
-    {
-      id: 5,
-      name: "English 10B",
-      students: 35,
-      teacher: "Mr. Wilson",
-      status: t("active"),
-      subjects: 4,
-    },
-  ];
+  useEffect(() => {
+    if (!searchParams.get("tab")) {
+      navigate("/class-management?tab=list", { replace: true });
+    }
+  }, [searchParams, navigate]);
+
+  const getPageTitle = () => {
+    switch (activeTab) {
+      case "list":
+        return t("classList");
+      case "schedule":
+        return t("classSchedule");
+      case "activity":
+        return t("classActivity");
+      case "attendance":
+        return t("attendance");
+      case "assignments":
+        return t("assignments");
+      case "grades":
+        return t("grades");
+      case "notifications":
+        return t("notifications");
+      case "members":
+        return t("classMembers");
+      case "certificates":
+        return t("certificates");
+      case "settings":
+        return t("classSettings");
+      default:
+        return t("classList");
+    }
+  };
+
+  const getPageDescription = () => {
+    switch (activeTab) {
+      case "list":
+        return t("classManagementDesc");
+      case "schedule":
+        return t("classScheduleDesc");
+      case "activity":
+        return t("classActivityDesc");
+      case "attendance":
+        return t("attendanceDesc");
+      case "assignments":
+        return t("assignmentsDesc");
+      case "grades":
+        return t("gradesDesc");
+      case "notifications":
+        return t("notificationsDesc");
+      case "members":
+        return t("classMembersDesc");
+      case "certificates":
+        return t("certificatesDesc");
+      case "settings":
+        return t("classSettingsDesc");
+      default:
+        return t("classManagementDesc");
+    }
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "list":
+        return <ClassList />;
+      case "schedule":
+        return <ClassSchedule />;
+      case "activity":
+        return <ClassActivity />;
+      case "attendance":
+        return <ClassAttendance />;
+      case "assignments":
+        return <ClassAssignments />;
+      case "grades":
+        return <ClassGrades />;
+      case "notifications":
+        return <ClassNotifications />;
+      case "members":
+        return <ClassMembers />;
+      case "certificates":
+        return <ClassCertificates />;
+      case "settings":
+        return <ClassSettings />;
+      default:
+        return <ClassList />;
+    }
+  };
 
   return (
     <Layout>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {t("classManagementTitle")}
-            </h1>
-            <p className="text-gray-600 mt-1">{t("classManagementDesc")}</p>
-          </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
-            <Plus className="w-4 h-4" />
-            <span>{t("addNewClass")}</span>
-          </button>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{getPageTitle()}</h1>
+          <p className="text-gray-600 mt-1">{getPageDescription()}</p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">
-                  {t("totalClasses")}
-                </p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">24</p>
-              </div>
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">
-                  {t("totalStudents")}
-                </p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">1,248</p>
-              </div>
-              <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">
-                  {t("activeClasses")}
-                </p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">20</p>
-              </div>
-              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Classes Table */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">
-              {t("allClassesTable")}
-            </h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("className")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("teacher")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("students")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("subjects")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("status")}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t("actions")}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {classes.map((classItem) => (
-                  <tr key={classItem.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {classItem.name}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {classItem.teacher}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <Users className="w-4 h-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">
-                          {classItem.students}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {classItem.subjects}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          classItem.status === t("active")
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {classItem.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex space-x-2">
-                        <button className="text-blue-600 hover:text-blue-900">
-                          <Edit className="w-4 h-4" />
-                        </button>
-                        <button className="text-red-600 hover:text-red-900">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        {/* Tab Content */}
+        <div>{renderContent()}</div>
       </div>
     </Layout>
   );

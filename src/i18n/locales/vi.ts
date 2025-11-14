@@ -389,4 +389,87 @@ export const vi = {
 
   // Toast Messages
   logoutSuccess: "Bạn đã đăng xuất thành công.",
+
+  // Class Management Tabs
+  classList: "Danh sách lớp",
+  schedule: "Lịch học",
+  activity: "Hoạt động",
+  grades: "Điểm số",
+  members: "Thành viên",
+  certificates: "Chứng chỉ",
+
+  // Class Activity
+  classActivity: "Hoạt động lớp học",
+  classActivityDesc: "Theo dõi tất cả hoạt động trong lớp học",
+  totalActivities: "Tổng hoạt động",
+  thisWeek: "Tuần này",
+  activeUsers: "Người dùng hoạt động",
+  recentActivity: "Hoạt động gần đây",
+
+  // Class Schedule
+  classSchedule: "Lịch học",
+  classScheduleDesc: "Quản lý lịch học và thời khóa biểu",
+  addSchedule: "Thêm lịch học",
+
+  // Class Attendance
+  attendanceDesc: "Theo dõi điểm danh học sinh",
+  takeAttendance: "Điểm danh",
+  present: "Có mặt",
+  absent: "Vắng mặt",
+  late: "Muộn",
+  todayAttendance: "Điểm danh hôm nay",
+  time: "Thời gian",
+
+  // Class Assignments
+  assignments: "Bài tập",
+  assignmentsDesc: "Quản lý bài tập và nộp bài",
+  allAssignments: "Tất cả bài tập",
+
+  // Class Grades
+  gradesDesc: "Xem và quản lý điểm số học sinh",
+  classAverage: "Điểm trung bình lớp",
+  studentGrades: "Điểm số học sinh",
+  average: "Trung bình",
+  math: "Toán",
+  physics: "Vật lý",
+  chemistry: "Hóa học",
+
+  // Class Notifications
+  notificationsDesc: "Quản lý thông báo lớp học",
+  sendNotification: "Gửi thông báo",
+  total: "Tổng",
+  unread: "Chưa đọc",
+  allNotifications: "Tất cả thông báo",
+
+  // Class Members
+  classMembers: "Thành viên lớp học",
+  classMembersDesc: "Quản lý học sinh và giáo viên",
+  addMember: "Thêm thành viên",
+  totalMembers: "Tổng thành viên",
+  teachers: "Giáo viên",
+  allMembers: "Tất cả thành viên",
+
+  // Class Certificates
+  certificatesDesc: "Quản lý chứng chỉ và giấy khen",
+  issueCertificate: "Cấp chứng chỉ",
+  totalIssued: "Đã cấp",
+  thisMonth: "Tháng này",
+  pending: "Đang chờ",
+  allCertificates: "Tất cả chứng chỉ",
+  certificateName: "Tên chứng chỉ",
+  issueDate: "Ngày cấp",
+  issued: "Đã cấp",
+  course: "Khóa học",
+
+  // Class Settings
+  classSettings: "Cài đặt lớp học",
+  classSettingsDesc: "Quản lý cài đặt và quyền riêng tư",
+  generalSettings: "Cài đặt chung",
+  privacySettings: "Cài đặt quyền riêng tư",
+  publicClass: "Lớp công khai",
+  publicClassDesc: "Cho phép mọi người xem lớp học này",
+  requireApproval: "Yêu cầu phê duyệt",
+  requireApprovalDesc: "Phê duyệt học sinh trước khi tham gia",
+  allowInvites: "Cho phép mời",
+  allowInvitesDesc: "Thành viên có thể mời người khác",
 };

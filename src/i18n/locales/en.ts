@@ -390,4 +390,85 @@ export const en = {
 
   // Toast Messages
   logoutSuccess: "You have been logged out successfully.",
+
+  // Class Management Tabs
+  classList: "Class List",
+  schedule: "Schedule",
+  activity: "Activity",
+  grades: "Grades",
+  members: "Members",
+  certificates: "Certificates",
+
+  // Class Activity
+  classActivity: "Class Activity",
+  classActivityDesc: "Track all activities in the class",
+  totalActivities: "Total Activities",
+  thisWeek: "This Week",
+
+  // Class Schedule
+  classSchedule: "Class Schedule",
+  classScheduleDesc: "Manage class schedule and timetable",
+  addSchedule: "Add Schedule",
+
+  // Class Attendance
+  attendanceDesc: "Track student attendance",
+  takeAttendance: "Take Attendance",
+  present: "Present",
+  absent: "Absent",
+  late: "Late",
+  todayAttendance: "Today's Attendance",
+  time: "Time",
+
+  // Class Assignments
+  assignments: "Assignments",
+  assignmentsDesc: "Manage assignments and submissions",
+  allAssignments: "All Assignments",
+
+  // Class Grades
+  gradesDesc: "View and manage student grades",
+  classAverage: "Class Average",
+  studentGrades: "Student Grades",
+  average: "Average",
+  math: "Math",
+  physics: "Physics",
+  chemistry: "Chemistry",
+
+  // Class Notifications
+  notificationsDesc: "Manage class notifications",
+  sendNotification: "Send Notification",
+  total: "Total",
+  unread: "Unread",
+  allNotifications: "All Notifications",
+
+  // Class Members
+  classMembers: "Class Members",
+  classMembersDesc: "Manage students and teachers",
+  addMember: "Add Member",
+  totalMembers: "Total Members",
+  teachers: "Teachers",
+  allMembers: "All Members",
+
+  // Class Certificates
+  certificatesDesc: "Manage certificates and awards",
+  issueCertificate: "Issue Certificate",
+  totalIssued: "Total Issued",
+  thisMonth: "This Month",
+  pending: "Pending",
+  allCertificates: "All Certificates",
+  certificateName: "Certificate Name",
+  issueDate: "Issue Date",
+  issued: "Issued",
+  course: "Course",
+
+  // Class Settings
+  classSettings: "Class Settings",
+  classSettingsDesc: "Manage class settings and privacy",
+  generalSettings: "General Settings",
+  privacySettings: "Privacy Settings",
+  publicClass: "Public Class",
+  publicClassDesc: "Allow everyone to view this class",
+  requireApproval: "Require Approval",
+  requireApprovalDesc: "Approve students before joining",
+  allowInvites: "Allow Invites",
+  allowInvitesDesc: "Members can invite others",
 };

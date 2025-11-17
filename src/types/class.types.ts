@@ -19,6 +19,8 @@ export interface ClassTeacher {
 export interface Class {
   id: number;
   tenant_id: number;
+  tenant_name?: string;
+  tenant_code?: string;
   campus_id: number | null;
   course_blueprint_id: number | null;
   code: string | null;

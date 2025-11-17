@@ -312,8 +312,10 @@ const ClassDetail: React.FC = () => {
               </span>
             </div>
             <div>
-              <span className="text-gray-500">Tenant ID:</span>
-              <span className="ml-2 text-gray-900">{classData.tenant_id}</span>
+              <span className="text-gray-500">Tenant:</span>
+              <span className="ml-2 text-gray-900">
+                {classData.tenant_name || `ID: ${classData.tenant_id}`}
+              </span>
             </div>
             <div>
               <span className="text-gray-500">Campus ID:</span>

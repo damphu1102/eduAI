@@ -3,9 +3,32 @@ const { promisePool } = require("../config/database");
 // Helper function to convert date to MySQL DATE format (YYYY-MM-DD)
 const formatDateForMySQL = (dateString) => {
   if (!dateString) return null;
+
+  // If it's already a Date object from MySQL, extract the date part directly
+  if (dateString instanceof Date) {
+    const year = dateString.getFullYear();
+    const month = String(dateString.getMonth() + 1).padStart(2, "0");
+    const day = String(dateString.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  // If it's already in YYYY-MM-DD format, return as is
+  if (
+    typeof dateString === "string" &&
+    /^\d{4}-\d{2}-\d{2}$/.test(dateString)
+  ) {
+    return dateString;
+  }
+
+  // Otherwise, parse and format
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return null;
-  return date.toISOString().split("T")[0];
+
+  // Use UTC to avoid timezone issues
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 // Get all classes
@@ -89,7 +112,10 @@ const getClassById = async (req, res) => {
     const { id } = req.params;
 
     const [classes] = await promisePool.query(
-      "SELECT * FROM classes WHERE id = ?",
+      `SELECT c.*, t.name as tenant_name, t.code as tenant_code
+       FROM classes c
+       LEFT JOIN tenants t ON c.tenant_id = t.id
+       WHERE c.id = ?`,
       [id]
     );
 
@@ -363,27 +389,39 @@ const getClassStats = async (req, res) => {
 const assignTeachers = async (req, res) => {
   try {
     const { id } = req.params;
-    const { teacher_ids } = req.body;
+    const { teacher_ids, teachers } = req.body;
 
-    // Validate input
-    if (!Array.isArray(teacher_ids)) {
+    // Support both old format (teacher_ids array) and new format (teachers array with dates)
+    let teacherData = [];
+
+    if (teachers && Array.isArray(teachers)) {
+      // New format: array of objects with id, start_date, end_date
+      teacherData = teachers;
+    } else if (teacher_ids && Array.isArray(teacher_ids)) {
+      // Old format: array of IDs (backward compatibility)
+      teacherData = teacher_ids.map((id) => ({
+        id: id,
+        start_date: null,
+        end_date: null,
+      }));
+    } else {
       return res.status(400).json({
         success: false,
-        message: "teacher_ids must be an array",
+        message: "Either teacher_ids or teachers array is required",
       });
     }
 
-    // Validate all IDs are numbers
-    if (teacher_ids.some((id) => !Number.isInteger(id) || id <= 0)) {
+    // Validate all entries have valid IDs
+    if (teacherData.some((t) => !Number.isInteger(t.id) || t.id <= 0)) {
       return res.status(400).json({
         success: false,
-        message: "All teacher_ids must be positive integers",
+        message: "All teacher IDs must be positive integers",
       });
     }
 
     // Check if class exists
     const [classes] = await promisePool.query(
-      "SELECT id FROM classes WHERE id = ?",
+      "SELECT id, start_date, end_date FROM classes WHERE id = ?",
       [id]
     );
 
@@ -394,15 +432,20 @@ const assignTeachers = async (req, res) => {
       });
     }
 
+    const classInfo = classes[0];
+
+    // Extract teacher IDs for validation
+    const teacherIds = teacherData.map((t) => t.id);
+
     // Validate all teachers exist and have teacher role
-    if (teacher_ids.length > 0) {
+    if (teacherIds.length > 0) {
       const [teachers] = await promisePool.query(
         `SELECT id FROM users 
          WHERE id IN (?) AND role = 'teacher' AND deleted_at IS NULL`,
-        [teacher_ids]
+        [teacherIds]
       );
 
-      if (teachers.length !== teacher_ids.length) {
+      if (teachers.length !== teacherIds.length) {
         return res.status(400).json({
           success: false,
           message:
@@ -416,12 +459,19 @@ const assignTeachers = async (req, res) => {
       id,
     ]);
 
-    // Add new teachers
-    if (teacher_ids.length > 0) {
-      for (const teacherId of teacher_ids) {
+    // Add new teachers with dates
+    if (teacherData.length > 0) {
+      for (const teacher of teacherData) {
+        const startDate = teacher.start_date
+          ? formatDateForMySQL(teacher.start_date)
+          : formatDateForMySQL(classInfo.start_date);
+        const endDate = teacher.end_date
+          ? formatDateForMySQL(teacher.end_date)
+          : formatDateForMySQL(classInfo.end_date);
+
         await promisePool.query(
           "INSERT INTO class_teachers (class_id, user_id, role, start_date, end_date) VALUES (?, ?, ?, ?, ?)",
-          [id, teacherId, "teacher", null, null]
+          [id, teacher.id, "teacher", startDate, endDate]
         );
       }
     }
@@ -431,7 +481,7 @@ const assignTeachers = async (req, res) => {
       message: "Teachers assigned successfully",
       data: {
         class_id: parseInt(id),
-        teacher_count: teacher_ids.length,
+        teacher_count: teacherData.length,
       },
     });
   } catch (error) {

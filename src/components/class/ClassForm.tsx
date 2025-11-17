@@ -38,7 +38,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
     code: initialData?.code || "",
     description: initialData?.description || "",
     level: initialData?.level || "",
-    language: initialData?.language || "en",
+    language: initialData?.language || "",
     max_students: initialData?.max_students || 20,
     status: initialData?.status || ("draft" as ClassStatus),
     start_date: formatDateForInput(initialData?.start_date),
@@ -70,16 +70,42 @@ const ClassForm: React.FC<ClassFormProps> = ({
     fetchTeachers();
   }, []);
 
+  // Define levels for each language
+  const levelsByLanguage: Record<string, string[]> = {
+    en: ["A1", "A2", "B1", "B2", "C1", "C2"],
+    vi: ["Beginner", "Elementary", "Intermediate", "Advanced"],
+    zh: ["HSK 1", "HSK 2", "HSK 3", "HSK 4", "HSK 5", "HSK 6"],
+    ko: [
+      "TOPIK I Level 1",
+      "TOPIK I Level 2",
+      "TOPIK II Level 3",
+      "TOPIK II Level 4",
+      "TOPIK II Level 5",
+      "TOPIK II Level 6",
+    ],
+    ja: ["N5", "N4", "N3", "N2", "N1"],
+  };
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    // If language changes, reset level
+    if (name === "language") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        level: "", // Reset level when language changes
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleDayToggle = (day: string) => {
@@ -191,21 +217,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Level
-            </label>
-            <input
-              type="text"
-              name="level"
-              value={formData.level}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="e.g., A1, A2, B1"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Language
+              Language *
             </label>
             <select
               name="language"
@@ -213,11 +225,35 @@ const ClassForm: React.FC<ClassFormProps> = ({
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
+              <option value="">Select Language</option>
               <option value="en">English</option>
               <option value="vi">Vietnamese</option>
               <option value="zh">Chinese</option>
               <option value="ko">Korean</option>
               <option value="ja">Japanese</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Level
+            </label>
+            <select
+              name="level"
+              value={formData.level}
+              onChange={handleChange}
+              disabled={!formData.language}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+            >
+              <option value="">
+                {formData.language ? "Select Level" : "Select Language First"}
+              </option>
+              {formData.language &&
+                levelsByLanguage[formData.language]?.map((level) => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
             </select>
           </div>
 

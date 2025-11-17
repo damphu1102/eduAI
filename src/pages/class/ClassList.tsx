@@ -131,22 +131,6 @@ const ClassList: React.FC = () => {
     return colors[status] || colors.draft;
   };
 
-  const formatDate = (dateString: string | null) => {
-    if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const formatSchedule = (schedule: any) => {
-    if (!schedule) return "No schedule";
-    const days = schedule.days?.join(", ") || "N/A";
-    const time = schedule.time || "N/A";
-    return `${days} • ${time}`;
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -294,14 +278,8 @@ const ClassList: React.FC = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   TEACHER
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                   LEVEL
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  SCHEDULE
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  DURATION
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   ROOM
@@ -349,8 +327,8 @@ const ClassList: React.FC = () => {
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col items-center space-y-1">
                       <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
                         {classItem.level || "N/A"}
                       </span>
@@ -359,17 +337,6 @@ const ClassList: React.FC = () => {
                           {classItem.language.toUpperCase()}
                         </span>
                       )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">
-                      {formatSchedule(classItem.schedule)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {formatDate(classItem.start_date)} -{" "}
-                      {formatDate(classItem.end_date)}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">

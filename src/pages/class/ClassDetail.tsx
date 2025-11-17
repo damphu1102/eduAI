@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import { useClass } from "../../hooks/useClasses";
 import { useTranslation } from "../../hooks/useTranslation";
 import {
@@ -374,8 +375,17 @@ const ClassDetail: React.FC = () => {
   );
 
   return (
-    <Layout>
+    <Layout hideBreadcrumb>
       <div className="space-y-6">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb
+          items={[
+            { label: t("dashboard"), path: "/" },
+            { label: t("classManagement"), path: "/class-management" },
+            { label: classData.name },
+          ]}
+        />
+
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">

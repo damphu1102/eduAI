@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import ClassForm from "../../components/class/ClassForm";
 import { useClass } from "../../hooks/useClasses";
 import { classService } from "../../services/classService";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const EditClass: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { classData, loading: loadingClass, error } = useClass(Number(id));
   const [loading, setLoading] = useState(false);
 
@@ -62,8 +65,18 @@ const EditClass: React.FC = () => {
   }
 
   return (
-    <Layout>
+    <Layout hideBreadcrumb>
       <div className="space-y-6">
+        {/* Breadcrumb */}
+        <Breadcrumb
+          items={[
+            { label: t("dashboard"), path: "/" },
+            { label: t("classManagement"), path: "/class-management" },
+            { label: classData.name, path: `/classes/${id}` },
+            { label: t("edit") },
+          ]}
+        />
+
         <div className="flex items-center space-x-4">
           <button
             onClick={() => navigate(`/classes/${id}`)}
@@ -72,8 +85,10 @@ const EditClass: React.FC = () => {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Edit Class</h1>
-            <p className="text-gray-600 mt-1">{classData.name}</p>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {t("edit")} {classData.name}
+            </h1>
+            <p className="text-gray-600 mt-1">{classData.code || "No code"}</p>
           </div>
         </div>
 

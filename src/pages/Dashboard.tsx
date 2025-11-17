@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <Layout>
+    <Layout hideBreadcrumb>
       <div className="space-y-6">
         {/* Page Header */}
         <div>

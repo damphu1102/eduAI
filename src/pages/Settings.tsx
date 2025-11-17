@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
+import Breadcrumb from "../components/common/Breadcrumb";
 import { User, Bell, Lock, Globe, Palette, Database } from "lucide-react";
 import { useSettings, type Language } from "../context/SettingsContext";
 import { timezones } from "../utils/timezones";
@@ -40,8 +41,15 @@ const Settings: React.FC = () => {
   ];
 
   return (
-    <Layout>
+    <Layout hideBreadcrumb>
       <div className="space-y-6">
+        {/* Breadcrumb */}
+        <Breadcrumb
+          items={[
+            { label: t("dashboard"), path: "/" },
+            { label: t("settings") },
+          ]}
+        />
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{t("settings")}</h1>
           <p className="text-gray-600 mt-1">{t("manageSettings")}</p>

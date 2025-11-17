@@ -26,10 +26,7 @@ const ClassList: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<ClassStatus | undefined>();
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [classToDelete, setClassToDelete] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
+  const [selectedClasses, setSelectedClasses] = useState<number[]>([]);
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -81,34 +78,51 @@ const ClassList: React.FC = () => {
     navigate(`/classes/${id}`, { state: { className: name } });
   };
 
-  const handleDeleteClick = (id: number, name: string) => {
-    setClassToDelete({ id, name });
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedClasses(classes.map((c) => c.id));
+    } else {
+      setSelectedClasses([]);
+    }
+  };
+
+  const handleSelectClass = (id: number, checked: boolean) => {
+    if (checked) {
+      setSelectedClasses([...selectedClasses, id]);
+    } else {
+      setSelectedClasses(selectedClasses.filter((cId) => cId !== id));
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    if (selectedClasses.length === 0) {
+      alert("Please select classes to delete");
+      return;
+    }
     setDeleteModalOpen(true);
   };
 
   const handleDeleteConfirm = async () => {
-    if (!classToDelete) return;
-
     try {
-      await classService.delete(classToDelete.id);
+      // Delete all selected classes
+      await Promise.all(selectedClasses.map((id) => classService.delete(id)));
       setDeleteModalOpen(false);
-      setClassToDelete(null);
+      setSelectedClasses([]);
       refresh();
       // Refresh stats after delete
       const response = await classService.getOverallStats();
       if (response.success) {
         setStats(response.data);
       }
-      alert("Class deleted successfully!");
+      alert(`Successfully deleted ${selectedClasses.length} class(es)!`);
     } catch (error) {
-      console.error("Delete class error:", error);
-      alert("Failed to delete class");
+      console.error("Delete classes error:", error);
+      alert("Failed to delete some classes");
     }
   };
 
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
-    setClassToDelete(null);
   };
 
   const handleSearchChange = (value: string) => {
@@ -257,6 +271,19 @@ const ClassList: React.FC = () => {
               </select>
             </div>
 
+            {/* Delete Button */}
+            {selectedClasses.length > 0 && (
+              <button
+                onClick={handleDeleteSelected}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center space-x-2 whitespace-nowrap"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>
+                  {t("delete")} ({selectedClasses.length})
+                </span>
+              </button>
+            )}
+
             {/* Create Button */}
             <button
               onClick={handleCreateClass}
@@ -272,6 +299,17 @@ const ClassList: React.FC = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
+                <th className="px-6 py-3 text-left">
+                  <input
+                    type="checkbox"
+                    checked={
+                      classes.length > 0 &&
+                      selectedClasses.length === classes.length
+                    }
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   CLASS
                 </th>
@@ -287,19 +325,30 @@ const ClassList: React.FC = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   STATUS
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  ACTIONS
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {classes.map((classItem) => (
-                <tr
-                  key={classItem.id}
-                  className="hover:bg-gray-50 cursor-pointer"
-                  onClick={() => handleViewClass(classItem.id, classItem.name)}
-                >
-                  <td className="px-6 py-4">
+                <tr key={classItem.id} className="hover:bg-gray-50">
+                  <td
+                    className="px-6 py-4"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedClasses.includes(classItem.id)}
+                      onChange={(e) =>
+                        handleSelectClass(classItem.id, e.target.checked)
+                      }
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                  </td>
+                  <td
+                    className="px-6 py-4 cursor-pointer"
+                    onClick={() =>
+                      handleViewClass(classItem.id, classItem.name)
+                    }
+                  >
                     <div>
                       <div className="text-sm font-medium text-gray-900">
                         {classItem.name}
@@ -309,7 +358,12 @@ const ClassList: React.FC = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td
+                    className="px-6 py-4 whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      handleViewClass(classItem.id, classItem.name)
+                    }
+                  >
                     {classItem.teachers && classItem.teachers.length > 0 ? (
                       <div className="text-sm">
                         <div className="font-medium text-gray-900">
@@ -327,7 +381,12 @@ const ClassList: React.FC = () => {
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4">
+                  <td
+                    className="px-6 py-4 cursor-pointer"
+                    onClick={() =>
+                      handleViewClass(classItem.id, classItem.name)
+                    }
+                  >
                     <div className="flex flex-col items-center space-y-1">
                       <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
                         {classItem.level || "N/A"}
@@ -339,39 +398,40 @@ const ClassList: React.FC = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td
+                    className="px-6 py-4 whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      handleViewClass(classItem.id, classItem.name)
+                    }
+                  >
                     <div className="flex items-center text-sm text-gray-900">
                       <MapPin className="w-4 h-4 mr-1 text-gray-400" />
                       {classItem.room || "TBA"}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
-                        classItem.status
-                      )}`}
-                    >
-                      {classItem.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div
-                      className="flex space-x-2"
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                  <td
+                    className="px-6 py-4 whitespace-nowrap cursor-pointer group"
+                    onClick={() =>
+                      handleViewClass(classItem.id, classItem.name)
+                    }
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
+                          classItem.status
+                        )}`}
+                      >
+                        {classItem.status}
+                      </span>
                       <button
-                        onClick={() => handleEditClass(classItem.id)}
-                        className="text-blue-600 hover:text-blue-900"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditClass(classItem.id);
+                        }}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-600 hover:text-blue-900 ml-2"
+                        title="Edit"
                       >
                         <Edit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDeleteClick(classItem.id, classItem.name)
-                        }
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </td>
@@ -430,7 +490,10 @@ const ClassList: React.FC = () => {
             <div className="mb-6">
               <p className="text-gray-700">
                 Are you sure you want to delete{" "}
-                <span className="font-semibold">{classToDelete?.name}</span>?
+                <span className="font-semibold">
+                  {selectedClasses.length} class(es)
+                </span>
+                ?
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 All associated data will be permanently removed.

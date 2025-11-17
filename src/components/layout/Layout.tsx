@@ -4,9 +4,10 @@ import Header from "./Header";
 
 interface LayoutProps {
   children: React.ReactNode;
+  hideBreadcrumb?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, hideBreadcrumb }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -30,6 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Header
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
+            hideBreadcrumb={hideBreadcrumb}
           />
           <main className="p-4 md:p-6">{children}</main>
         </div>

@@ -17,11 +17,13 @@ import { useTranslation } from "../../hooks/useTranslation";
 interface HeaderProps {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (value: boolean) => void;
+  hideBreadcrumb?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
+  hideBreadcrumb,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -131,26 +133,28 @@ const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Center - Breadcrumb Navigation */}
-        <nav className="hidden md:flex items-center space-x-1 md:space-x-2 flex-1 justify-center px-2 md:px-4 overflow-x-auto">
-          {breadcrumbs.map((crumb, index) => (
-            <React.Fragment key={crumb.path}>
-              {index > 0 && (
-                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-gray-400 flex-shrink-0" />
-              )}
-              <button
-                onClick={() => navigate(crumb.path)}
-                className={`flex items-center space-x-1 px-1.5 md:px-2 py-1 rounded-md transition-colors whitespace-nowrap ${
-                  index === breadcrumbs.length - 1
-                    ? "text-emerald-600 font-medium bg-emerald-50"
-                    : "text-gray-600 hover:text-emerald-600 hover:bg-gray-50"
-                }`}
-              >
-                {index === 0 && <Home className="w-3 h-3 md:w-4 md:h-4" />}
-                <span className="text-xs md:text-sm">{crumb.name}</span>
-              </button>
-            </React.Fragment>
-          ))}
-        </nav>
+        {!hideBreadcrumb && (
+          <nav className="hidden md:flex items-center space-x-1 md:space-x-2 flex-1 justify-center px-2 md:px-4 overflow-x-auto">
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={crumb.path}>
+                {index > 0 && (
+                  <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-gray-400 flex-shrink-0" />
+                )}
+                <button
+                  onClick={() => navigate(crumb.path)}
+                  className={`flex items-center space-x-1 px-1.5 md:px-2 py-1 rounded-md transition-colors whitespace-nowrap ${
+                    index === breadcrumbs.length - 1
+                      ? "text-emerald-600 font-medium bg-emerald-50"
+                      : "text-gray-600 hover:text-emerald-600 hover:bg-gray-50"
+                  }`}
+                >
+                  {index === 0 && <Home className="w-3 h-3 md:w-4 md:h-4" />}
+                  <span className="text-xs md:text-sm">{crumb.name}</span>
+                </button>
+              </React.Fragment>
+            ))}
+          </nav>
+        )}
 
         {/* Right side - DateTime, Notifications and User */}
         <div className="flex items-center space-x-2 md:space-x-4">

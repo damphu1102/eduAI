@@ -131,9 +131,18 @@ const ClassDetail: React.FC = () => {
     <>
       {/* Main Info Card */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Class Information
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Class Information
+          </h2>
+          <button
+            onClick={() => navigate(`/classes/${id}/edit`)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          >
+            <Edit className="w-4 h-4" />
+            <span>Edit</span>
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column */}
@@ -387,65 +396,51 @@ const ClassDetail: React.FC = () => {
         />
 
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => navigate("/class-management")}
-              className="p-2 hover:bg-gray-100 rounded-lg"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {classData.name}
-              </h1>
-              <p className="text-gray-600 mt-1">
-                {classData.code || "No code"}
-              </p>
-            </div>
-          </div>
+        <div className="flex items-center space-x-4">
           <button
-            onClick={() => navigate(`/classes/${id}/edit`)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            onClick={() => navigate("/class-management")}
+            className="p-2 hover:bg-gray-100 rounded-lg"
           >
-            <Edit className="w-4 h-4" />
-            <span>Edit Class</span>
+            <ArrowLeft className="w-5 h-5" />
           </button>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {classData.name}
+            </h1>
+            <p className="text-gray-600 mt-1">{classData.code || "No code"}</p>
+          </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="grid grid-cols-5 md:grid-cols-10 gap-0">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <div key={tab.id} className="relative group">
+        {/* Content with Sidebar Navigation */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-2">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
                   <button
+                    key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`w-full flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-4 py-3 text-xs md:text-sm font-medium border-b-2 transition-colors ${
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
                       activeTab === tab.id
-                        ? "border-emerald-600 text-emerald-700 bg-emerald-50/50"
-                        : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        ? "bg-emerald-50 text-emerald-600"
+                        : "text-gray-700 hover:bg-gray-50"
                     }`}
                   >
-                    <Icon className="w-4 h-4 md:w-4 md:h-4" />
-                    <span className="mt-1 md:mt-0 text-[10px] md:text-sm truncate max-w-full">
-                      {tab.label}
-                    </span>
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{tab.label}</span>
                   </button>
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-lg">
-                    {tab.label}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="lg:col-span-3">
+            <div className="space-y-6">{renderTabContent()}</div>
           </div>
         </div>
-
-        {/* Tab Content */}
-        <div className="space-y-6">{renderTabContent()}</div>
       </div>
     </Layout>
   );

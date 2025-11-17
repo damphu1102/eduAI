@@ -264,6 +264,7 @@ export const ja = {
 
   // Class Management Tabs
   classList: "クラス一覧",
+  overview: "概要",
   schedule: "スケジュール",
   activity: "アクティビティ",
   grades: "成績",

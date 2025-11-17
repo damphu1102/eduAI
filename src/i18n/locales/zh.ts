@@ -260,6 +260,7 @@ export const zh = {
 
   // Class Management Tabs
   classList: "班级列表",
+  overview: "概览",
   schedule: "课程表",
   activity: "活动",
   grades: "成绩",

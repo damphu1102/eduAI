@@ -396,6 +396,7 @@ export const en = {
 
   // Class Management Tabs
   classList: "Class List",
+  overview: "Overview",
   schedule: "Schedule",
   activity: "Activity",
   grades: "Grades",

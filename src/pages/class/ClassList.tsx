@@ -77,8 +77,8 @@ const ClassList: React.FC = () => {
     navigate(`/classes/${id}/edit`);
   };
 
-  const handleViewClass = (id: number) => {
-    navigate(`/classes/${id}`);
+  const handleViewClass = (id: number, name: string) => {
+    navigate(`/classes/${id}`, { state: { className: name } });
   };
 
   const handleDeleteClick = (id: number, name: string) => {
@@ -297,7 +297,7 @@ const ClassList: React.FC = () => {
                 <tr
                   key={classItem.id}
                   className="hover:bg-gray-50 cursor-pointer"
-                  onClick={() => handleViewClass(classItem.id)}
+                  onClick={() => handleViewClass(classItem.id, classItem.name)}
                 >
                   <td className="px-6 py-4">
                     <div>

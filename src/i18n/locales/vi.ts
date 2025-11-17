@@ -395,6 +395,7 @@ export const vi = {
 
   // Class Management Tabs
   classList: "Danh sách lớp",
+  overview: "Tổng quan",
   schedule: "Lịch học",
   activity: "Hoạt động",
   grades: "Điểm số",

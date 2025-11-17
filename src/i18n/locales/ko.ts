@@ -263,6 +263,7 @@ export const ko = {
 
   // Class Management Tabs
   classList: "클래스 목록",
+  overview: "개요",
   schedule: "일정",
   activity: "활동",
   grades: "성적",

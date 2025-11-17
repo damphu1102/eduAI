@@ -38,6 +38,36 @@ const Header: React.FC<HeaderProps> = ({
 
     const breadcrumbs = [{ name: t("dashboard"), path: "/" }];
 
+    // Special handling for class routes
+    if (pathnames[0] === "classes" && pathnames[1]) {
+      breadcrumbs.push({
+        name: t("classManagement"),
+        path: "/class-management",
+      });
+
+      // Get class name from URL state or show ID
+      const classId = pathnames[1];
+      const className = location.state?.className || `Class ${classId}`;
+
+      if (pathnames[2] === "edit") {
+        breadcrumbs.push({
+          name: className,
+          path: `/classes/${classId}`,
+        });
+        breadcrumbs.push({
+          name: t("edit"),
+          path: location.pathname,
+        });
+      } else {
+        breadcrumbs.push({
+          name: className,
+          path: location.pathname,
+        });
+      }
+      return breadcrumbs;
+    }
+
+    // Default handling for other routes
     pathnames.forEach((value, index) => {
       const path = `/${pathnames.slice(0, index + 1).join("/")}`;
       const key = value.replace(/-/g, "_");
@@ -101,20 +131,22 @@ const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Center - Breadcrumb Navigation */}
-        <nav className="hidden xl:flex items-center space-x-2 flex-1 justify-center px-4">
+        <nav className="hidden md:flex items-center space-x-1 md:space-x-2 flex-1 justify-center px-2 md:px-4 overflow-x-auto">
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={crumb.path}>
-              {index > 0 && <ChevronRight className="w-4 h-4 text-gray-400" />}
+              {index > 0 && (
+                <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-gray-400 flex-shrink-0" />
+              )}
               <button
                 onClick={() => navigate(crumb.path)}
-                className={`flex items-center space-x-1 px-2 py-1 rounded-md transition-colors ${
+                className={`flex items-center space-x-1 px-1.5 md:px-2 py-1 rounded-md transition-colors whitespace-nowrap ${
                   index === breadcrumbs.length - 1
                     ? "text-emerald-600 font-medium bg-emerald-50"
                     : "text-gray-600 hover:text-emerald-600 hover:bg-gray-50"
                 }`}
               >
-                {index === 0 && <Home className="w-4 h-4" />}
-                <span className="text-sm">{crumb.name}</span>
+                {index === 0 && <Home className="w-3 h-3 md:w-4 md:h-4" />}
+                <span className="text-xs md:text-sm">{crumb.name}</span>
               </button>
             </React.Fragment>
           ))}

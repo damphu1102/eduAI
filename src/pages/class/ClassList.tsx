@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Plus,
@@ -9,6 +9,8 @@ import {
   Calendar,
   MapPin,
   Filter,
+  Search,
+  X,
 } from "lucide-react";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useClasses } from "../../hooks/useClasses";
@@ -22,12 +24,50 @@ const ClassList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [statusFilter, setStatusFilter] = useState<ClassStatus | undefined>();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [classToDelete, setClassToDelete] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+  const [stats, setStats] = useState({
+    total: 0,
+    active: 0,
+    draft: 0,
+    completed: 0,
+    cancelled: 0,
+  });
 
   const { classes, loading, error, pagination, refresh } = useClasses({
     page,
     limit,
     status: statusFilter,
+    search: searchQuery,
   });
+
+  // Fetch stats on mount
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await classService.getOverallStats();
+        if (response.success) {
+          setStats(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch stats:", error);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  // Debounced search - auto search after 500ms of typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      refresh();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleCreateClass = () => {
     navigate("/classes/create");
@@ -41,16 +81,44 @@ const ClassList: React.FC = () => {
     navigate(`/classes/${id}`);
   };
 
-  const handleDeleteClass = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this class?")) return;
+  const handleDeleteClick = (id: number, name: string) => {
+    setClassToDelete({ id, name });
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!classToDelete) return;
 
     try {
-      await classService.delete(id);
+      await classService.delete(classToDelete.id);
+      setDeleteModalOpen(false);
+      setClassToDelete(null);
       refresh();
+      // Refresh stats after delete
+      const response = await classService.getOverallStats();
+      if (response.success) {
+        setStats(response.data);
+      }
+      alert("Class deleted successfully!");
     } catch (error) {
       console.error("Delete class error:", error);
       alert("Failed to delete class");
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalOpen(false);
+    setClassToDelete(null);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setPage(1); // Reset to first page when searching
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setPage(1);
   };
 
   const getStatusColor = (status: ClassStatus) => {
@@ -106,7 +174,7 @@ const ClassList: React.FC = () => {
                 {t("totalClasses")}
               </p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                {pagination.total}
+                {stats.total}
               </p>
             </div>
             <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -120,7 +188,7 @@ const ClassList: React.FC = () => {
             <div>
               <p className="text-sm font-medium text-gray-600">{t("active")}</p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                {classes.filter((c) => c.status === "active").length}
+                {stats.active}
               </p>
             </div>
             <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
@@ -134,7 +202,7 @@ const ClassList: React.FC = () => {
             <div>
               <p className="text-sm font-medium text-gray-600">{t("draft")}</p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                {classes.filter((c) => c.status === "draft").length}
+                {stats.draft}
               </p>
             </div>
             <div className="w-12 h-12 bg-gray-500 rounded-lg flex items-center justify-center">
@@ -150,7 +218,7 @@ const ClassList: React.FC = () => {
                 {t("completed")}
               </p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                {classes.filter((c) => c.status === "completed").length}
+                {stats.completed}
               </p>
             </div>
             <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -163,30 +231,57 @@ const ClassList: React.FC = () => {
       {/* Table Section */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         {/* Table Header with Actions */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Filter className="w-5 h-5 text-gray-400" />
-            <select
-              value={statusFilter || ""}
-              onChange={(e) =>
-                setStatusFilter((e.target.value as ClassStatus) || undefined)
-              }
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">{t("allStatus")}</option>
-              <option value="draft">{t("draft")}</option>
-              <option value="active">{t("active")}</option>
-              <option value="completed">{t("completed")}</option>
-              <option value="cancelled">{t("cancelled")}</option>
-            </select>
+        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between gap-4">
+          {/* Search Box - Left */}
+          <div className="flex-1 max-w-md relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search by name or code..."
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {searchQuery && (
+              <button
+                onClick={handleClearSearch}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
-          <button
-            onClick={handleCreateClass}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
-          >
-            <Plus className="w-4 h-4" />
-            <span>{t("createClass")}</span>
-          </button>
+
+          {/* Filter & Create - Right */}
+          <div className="flex items-center gap-3">
+            {/* Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              <select
+                value={statusFilter || ""}
+                onChange={(e) => {
+                  setStatusFilter((e.target.value as ClassStatus) || undefined);
+                  setPage(1);
+                }}
+                className="border border-gray-300 rounded-lg pl-10 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
+              >
+                <option value="">{t("allStatus")}</option>
+                <option value="draft">{t("draft")}</option>
+                <option value="active">{t("active")}</option>
+                <option value="completed">{t("completed")}</option>
+                <option value="cancelled">{t("cancelled")}</option>
+              </select>
+            </div>
+
+            {/* Create Button */}
+            <button
+              onClick={handleCreateClass}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4" />
+              <span>{t("createClass")}</span>
+            </button>
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -304,7 +399,9 @@ const ClassList: React.FC = () => {
                         <Edit className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => handleDeleteClass(classItem.id)}
+                        onClick={() =>
+                          handleDeleteClick(classItem.id, classItem.name)
+                        }
                         className="text-red-600 hover:text-red-900"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -344,6 +441,52 @@ const ClassList: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <Trash2 className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Delete Class
+                </h3>
+                <p className="text-sm text-gray-500">
+                  This action cannot be undone
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <p className="text-gray-700">
+                Are you sure you want to delete{" "}
+                <span className="font-semibold">{classToDelete?.name}</span>?
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                All associated data will be permanently removed.
+              </p>
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={handleDeleteCancel}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

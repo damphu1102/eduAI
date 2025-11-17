@@ -13,6 +13,7 @@ export interface GetClassesParams {
   level?: string;
   language?: string;
   campus_id?: number;
+  search?: string;
 }
 
 export const classService = {
@@ -62,6 +63,23 @@ export const classService = {
   },
 
   /**
+   * Get overall class statistics
+   */
+  getOverallStats: async (): Promise<{
+    success: boolean;
+    data: {
+      total: number;
+      active: number;
+      draft: number;
+      completed: number;
+      cancelled: number;
+    };
+  }> => {
+    const response = await api.get("/classes/stats");
+    return response.data;
+  },
+
+  /**
    * Get class statistics
    */
   getStats: async (id: number) => {
@@ -90,6 +108,19 @@ export const classService = {
    */
   getSessions: async (id: number) => {
     const response = await api.get(`/classes/${id}/sessions`);
+    return response.data;
+  },
+
+  /**
+   * Assign teachers to class
+   */
+  assignTeachers: async (
+    classId: number,
+    teacherIds: number[]
+  ): Promise<{ success: boolean; message: string }> => {
+    const response = await api.post(`/classes/${classId}/teachers`, {
+      teacher_ids: teacherIds,
+    });
     return response.data;
   },
 };

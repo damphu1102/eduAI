@@ -15,7 +15,16 @@ const EditClass: React.FC = () => {
   const handleSubmit = async (data: any) => {
     try {
       setLoading(true);
-      await classService.update(Number(id), data);
+      const { teacher_ids, ...classData } = data;
+
+      // Update class first
+      await classService.update(Number(id), classData);
+
+      // Update teachers assignment
+      if (teacher_ids !== undefined) {
+        await classService.assignTeachers(Number(id), teacher_ids);
+      }
+
       alert("Class updated successfully!");
       navigate(`/classes/${id}`);
     } catch (error: any) {

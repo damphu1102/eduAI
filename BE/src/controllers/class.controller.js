@@ -1,9 +1,17 @@
 const { promisePool } = require("../config/database");
 
+// Helper function to convert date to MySQL DATE format (YYYY-MM-DD)
+const formatDateForMySQL = (dateString) => {
+  if (!dateString) return null;
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return null;
+  return date.toISOString().split("T")[0];
+};
+
 // Get all classes
 const getAllClasses = async (req, res) => {
   try {
-    const { page = 1, limit = 10, status } = req.query;
+    const { page = 1, limit = 10, status, search } = req.query;
     const offset = (page - 1) * limit;
 
     let query = "SELECT * FROM classes WHERE 1=1";
@@ -12,6 +20,11 @@ const getAllClasses = async (req, res) => {
     if (status) {
       query += " AND status = ?";
       params.push(status);
+    }
+
+    if (search) {
+      query += " AND (name LIKE ? OR code LIKE ?)";
+      params.push(`%${search}%`, `%${search}%`);
     }
 
     query += " ORDER BY created_at DESC LIMIT ? OFFSET ?";
@@ -39,6 +52,11 @@ const getAllClasses = async (req, res) => {
     if (status) {
       countQuery += " AND status = ?";
       countParams.push(status);
+    }
+
+    if (search) {
+      countQuery += " AND (name LIKE ? OR code LIKE ?)";
+      countParams.push(`%${search}%`, `%${search}%`);
     }
 
     const [countResult] = await promisePool.query(countQuery, countParams);
@@ -146,8 +164,8 @@ const createClass = async (req, res) => {
         language,
         max_students,
         status,
-        start_date,
-        end_date,
+        formatDateForMySQL(start_date),
+        formatDateForMySQL(end_date),
         JSON.stringify(schedule),
         room,
         created_by,
@@ -227,11 +245,11 @@ const updateClass = async (req, res) => {
     }
     if (start_date !== undefined) {
       updates.push("start_date = ?");
-      params.push(start_date);
+      params.push(formatDateForMySQL(start_date));
     }
     if (end_date !== undefined) {
       updates.push("end_date = ?");
-      params.push(end_date);
+      params.push(formatDateForMySQL(end_date));
     }
     if (schedule !== undefined) {
       updates.push("schedule = ?");
@@ -315,10 +333,128 @@ const deleteClass = async (req, res) => {
   }
 };
 
+// Get class statistics
+const getClassStats = async (req, res) => {
+  try {
+    const [stats] = await promisePool.query(
+      `SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active,
+        SUM(CASE WHEN status = 'draft' THEN 1 ELSE 0 END) as draft,
+        SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed,
+        SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled
+      FROM classes`
+    );
+
+    res.json({
+      success: true,
+      data: stats[0],
+    });
+  } catch (error) {
+    console.error("Get class stats error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+// Assign teachers to class
+const assignTeachers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { teacher_ids } = req.body;
+
+    // Validate input
+    if (!Array.isArray(teacher_ids)) {
+      return res.status(400).json({
+        success: false,
+        message: "teacher_ids must be an array",
+      });
+    }
+
+    // Validate all IDs are numbers
+    if (teacher_ids.some((id) => !Number.isInteger(id) || id <= 0)) {
+      return res.status(400).json({
+        success: false,
+        message: "All teacher_ids must be positive integers",
+      });
+    }
+
+    // Check if class exists
+    const [classes] = await promisePool.query(
+      "SELECT id FROM classes WHERE id = ?",
+      [id]
+    );
+
+    if (classes.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Class not found",
+      });
+    }
+
+    // Validate all teachers exist and have teacher role
+    if (teacher_ids.length > 0) {
+      const [teachers] = await promisePool.query(
+        `SELECT id FROM users 
+         WHERE id IN (?) AND role = 'teacher' AND deleted_at IS NULL`,
+        [teacher_ids]
+      );
+
+      if (teachers.length !== teacher_ids.length) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "One or more teacher IDs are invalid or users are not teachers",
+        });
+      }
+    }
+
+    // Remove existing teachers
+    await promisePool.query("DELETE FROM class_teachers WHERE class_id = ?", [
+      id,
+    ]);
+
+    // Add new teachers
+    if (teacher_ids.length > 0) {
+      for (const teacherId of teacher_ids) {
+        await promisePool.query(
+          "INSERT INTO class_teachers (class_id, user_id, role, start_date, end_date) VALUES (?, ?, ?, ?, ?)",
+          [id, teacherId, "teacher", null, null]
+        );
+      }
+    }
+
+    res.json({
+      success: true,
+      message: "Teachers assigned successfully",
+      data: {
+        class_id: parseInt(id),
+        teacher_count: teacher_ids.length,
+      },
+    });
+  } catch (error) {
+    console.error("Assign teachers error:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      sqlMessage: error.sqlMessage,
+    });
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
 module.exports = {
   getAllClasses,
   getClassById,
   createClass,
   updateClass,
   deleteClass,
+  getClassStats,
+  assignTeachers,
 };

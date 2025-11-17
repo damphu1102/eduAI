@@ -6,6 +6,8 @@ const {
   createClass,
   updateClass,
   deleteClass,
+  getClassStats,
+  assignTeachers,
 } = require("../controllers/class.controller");
 const { authMiddleware, checkRole } = require("../middleware/auth.middleware");
 const validate = require("../middleware/validator.middleware");
@@ -37,6 +39,7 @@ const classValidation = [
 router.use(authMiddleware);
 
 // Routes
+router.get("/stats", getClassStats);
 router.get("/", getAllClasses);
 router.get("/:id", getClassById);
 router.post(
@@ -54,5 +57,6 @@ router.put(
   updateClass
 );
 router.delete("/:id", checkRole("admin"), deleteClass);
+router.post("/:id/teachers", checkRole("admin", "teacher"), assignTeachers);
 
 module.exports = router;

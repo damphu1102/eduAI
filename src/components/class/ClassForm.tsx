@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type {
   Class,
   ClassStatus,
   ClassSchedule,
 } from "../../types/class.types";
+import { userService, type Teacher } from "../../services/userService";
 
 interface ClassFormProps {
   initialData?: Class;
@@ -18,6 +19,20 @@ const ClassForm: React.FC<ClassFormProps> = ({
   onCancel,
   loading = false,
 }) => {
+  // Helper to format date for input[type="date"]
+  const formatDateForInput = (
+    dateString: string | null | undefined
+  ): string => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return "";
+      return date.toISOString().split("T")[0];
+    } catch {
+      return "";
+    }
+  };
+
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     code: initialData?.code || "",
@@ -26,13 +41,34 @@ const ClassForm: React.FC<ClassFormProps> = ({
     language: initialData?.language || "en",
     max_students: initialData?.max_students || 20,
     status: initialData?.status || ("draft" as ClassStatus),
-    start_date: initialData?.start_date || "",
-    end_date: initialData?.end_date || "",
+    start_date: formatDateForInput(initialData?.start_date),
+    end_date: formatDateForInput(initialData?.end_date),
     room: initialData?.room || "",
     schedule_days: initialData?.schedule?.days || [],
     schedule_time: initialData?.schedule?.time || "",
     schedule_timezone: initialData?.schedule?.timezone || "Asia/Ho_Chi_Minh",
+    teacher_ids: initialData?.teachers?.map((t) => t.id) || [],
   });
+
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [loadingTeachers, setLoadingTeachers] = useState(true);
+
+  // Fetch teachers on mount
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await userService.getTeachers();
+        if (response.success) {
+          setTeachers(response.data.users);
+        }
+      } catch (error) {
+        console.error("Failed to fetch teachers:", error);
+      } finally {
+        setLoadingTeachers(false);
+      }
+    };
+    fetchTeachers();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -52,6 +88,15 @@ const ClassForm: React.FC<ClassFormProps> = ({
       schedule_days: prev.schedule_days.includes(day)
         ? prev.schedule_days.filter((d) => d !== day)
         : [...prev.schedule_days, day],
+    }));
+  };
+
+  const handleTeacherToggle = (teacherId: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      teacher_ids: prev.teacher_ids.includes(teacherId)
+        ? prev.teacher_ids.filter((id) => id !== teacherId)
+        : [...prev.teacher_ids, teacherId],
     }));
   };
 
@@ -76,6 +121,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
       end_date: formData.end_date || null,
       room: formData.room || null,
       schedule: formData.schedule_days.length > 0 ? schedule : null,
+      teacher_ids: formData.teacher_ids,
     };
 
     onSubmit(submitData);
@@ -207,6 +253,41 @@ const ClassForm: React.FC<ClassFormProps> = ({
             </select>
           </div>
         </div>
+      </div>
+
+      {/* Teachers */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Assign Teachers ({teachers.length})
+        </h3>
+
+        {loadingTeachers ? (
+          <div className="text-gray-500">Loading teachers...</div>
+        ) : teachers.length === 0 ? (
+          <div className="text-gray-500">No teachers available</div>
+        ) : (
+          <div className="max-h-80 overflow-y-auto space-y-2 pr-2">
+            {teachers.map((teacher) => (
+              <label
+                key={teacher.id}
+                className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.teacher_ids.includes(teacher.id)}
+                  onChange={() => handleTeacherToggle(teacher.id)}
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-gray-900">
+                    {teacher.full_name}
+                  </div>
+                  <div className="text-xs text-gray-500">{teacher.email}</div>
+                </div>
+              </label>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Schedule */}

@@ -12,9 +12,19 @@ const CreateClass: React.FC = () => {
   const handleSubmit = async (data: any) => {
     try {
       setLoading(true);
-      await classService.create(data);
+      const { teacher_ids, ...classData } = data;
+
+      // Create class first
+      const response = await classService.create(classData);
+      const classId = response.data.id;
+
+      // Assign teachers if any selected
+      if (teacher_ids && teacher_ids.length > 0) {
+        await classService.assignTeachers(classId, teacher_ids);
+      }
+
       alert("Class created successfully!");
-      navigate("/classes");
+      navigate("/class-management?tab=list");
     } catch (error: any) {
       console.error("Create class error:", error);
       alert(error.response?.data?.message || "Failed to create class");
@@ -24,7 +34,7 @@ const CreateClass: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate("/classes");
+    navigate("/class-management?tab=list");
   };
 
   return (
@@ -32,7 +42,7 @@ const CreateClass: React.FC = () => {
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => navigate("/classes")}
+            onClick={() => navigate("/class-management?tab=list")}
             className="p-2 hover:bg-gray-100 rounded-lg"
           >
             <ArrowLeft className="w-5 h-5" />

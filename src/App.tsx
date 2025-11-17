@@ -13,6 +13,9 @@ import { SettingsProvider } from "./context/SettingsContext";
 
 import Dashboard from "./pages/Dashboard.tsx";
 import ClassManagement from "./pages/ClassManagement.tsx";
+import CreateClass from "./pages/class/CreateClass.tsx";
+import ClassDetail from "./pages/class/ClassDetail.tsx";
+import EditClass from "./pages/class/EditClass.tsx";
 import CurriculumManagement from "./pages/CurriculumManagement.tsx";
 import CourseManagement from "./pages/CourseManagement.tsx";
 import AssignmentsGames from "./pages/AssignmentsGames.tsx";
@@ -54,6 +57,30 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <ClassManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/classes/create"
+                element={
+                  <ProtectedRoute>
+                    <CreateClass />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/classes/:id"
+                element={
+                  <ProtectedRoute>
+                    <ClassDetail />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/classes/:id/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditClass />
                   </ProtectedRoute>
                 }
               />

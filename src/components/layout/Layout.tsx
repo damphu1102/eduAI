@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import FloatingAIAssistant from "../common/FloatingAIAssistant";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,6 +37,9 @@ const Layout: React.FC<LayoutProps> = ({ children, hideBreadcrumb }) => {
           <main className="p-4 md:p-6">{children}</main>
         </div>
       </div>
+
+      {/* Floating AI Assistant */}
+      <FloatingAIAssistant />
     </div>
   );
 };

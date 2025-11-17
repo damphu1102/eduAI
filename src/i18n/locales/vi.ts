@@ -453,6 +453,19 @@ export const vi = {
 
   // Class Certificates
   certificatesDesc: "Quản lý chứng chỉ và giấy khen",
+
+  // Floating AI Assistant
+  aiAssistant: "Trợ lý AI",
+  aiAssistantReady: "Luôn sẵn sàng hỗ trợ",
+  aiAssistantWelcome:
+    "Xin chào! Tôi là trợ lý AI của SysEdu. Tôi có thể giúp gì cho bạn?",
+  aiAssistantProcessing:
+    "Cảm ơn bạn đã liên hệ! Tôi đang xử lý yêu cầu của bạn...",
+  typeMessage: "Nhập tin nhắn...",
+  sendMessage: "Gửi tin nhắn",
+  closeChat: "Đóng chat",
+  openAIAssistant: "Mở trợ lý AI",
+  closeAIAssistant: "Đóng trợ lý AI",
   issueCertificate: "Cấp chứng chỉ",
   totalIssued: "Đã cấp",
   thisMonth: "Tháng này",
@@ -474,4 +487,27 @@ export const vi = {
   requireApprovalDesc: "Phê duyệt học sinh trước khi tham gia",
   allowInvites: "Cho phép mời",
   allowInvitesDesc: "Thành viên có thể mời người khác",
+
+  // AI Assistant Panel
+  aiAssistantTitle: "Trợ lý AI Homeroom",
+  aiAssistantSubtitle: "Phân tích thông minh và đề xuất hành động",
+  aiAnalysis: "Phân tích AI",
+  aiInsights: "Thông tin chi tiết AI",
+  analyzingData: "Đang phân tích dữ liệu dashboard...",
+  refreshAnalysis: "Làm mới phân tích",
+  noActionsRecommended: "Không có hành động được đề xuất",
+  actionsRecommended: "Hành động được đề xuất",
+  highPriority: "Ưu tiên cao",
+  mediumPriority: "Ưu tiên trung bình",
+  lowPriority: "Gợi ý",
+  expandMore: "Xem thêm",
+  collapseText: "Thu gọn",
+  aiLoadError: "Không thể tải dữ liệu phân tích",
+  retryAction: "Thử lại",
+  aiFeatureDisabled: "Tính năng Trợ lý AI hiện đang bị tắt",
+  aiApiKeyMissing: "Chưa cấu hình khóa API Gemini",
+  aiRateLimitExceeded: "Vượt quá giới hạn yêu cầu. Vui lòng thử lại sau",
+  aiNetworkError: "Lỗi mạng. Vui lòng kiểm tra kết nối",
+  aiTimeoutError: "Yêu cầu hết thời gian. Vui lòng thử lại",
+  aiInvalidResponse: "Phản hồi không hợp lệ từ dịch vụ AI",
 };

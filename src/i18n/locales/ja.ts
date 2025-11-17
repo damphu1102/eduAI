@@ -343,4 +343,40 @@ export const ja = {
   requireApprovalDesc: "参加前に生徒を承認",
   allowInvites: "招待を許可",
   allowInvitesDesc: "メンバーが他の人を招待できる",
+
+  // Floating AI Assistant
+  aiAssistant: "AIアシスタント",
+  aiAssistantReady: "いつでもお手伝いします",
+  aiAssistantWelcome:
+    "こんにちは！私はSysEduのAIアシスタントです。どのようにお手伝いできますか？",
+  aiAssistantProcessing:
+    "お問い合わせありがとうございます！リクエストを処理しています...",
+  typeMessage: "メッセージを入力...",
+  sendMessage: "メッセージを送信",
+  closeChat: "チャットを閉じる",
+  openAIAssistant: "AIアシスタントを開く",
+  closeAIAssistant: "AIアシスタントを閉じる",
+
+  // AI Assistant Panel
+  aiAssistantTitle: "ホームルームAIアシスタント",
+  aiAssistantSubtitle: "インテリジェント分析とアクション推奨",
+  aiAnalysis: "AI分析",
+  aiInsights: "AIインサイト",
+  analyzingData: "ダッシュボードデータを分析中...",
+  refreshAnalysis: "分析を更新",
+  noActionsRecommended: "推奨アクションはありません",
+  actionsRecommended: "推奨アクション",
+  highPriority: "高優先度",
+  mediumPriority: "中優先度",
+  lowPriority: "提案",
+  expandMore: "もっと見る",
+  collapseText: "折りたたむ",
+  aiLoadError: "分析データを読み込めません",
+  retryAction: "再試行",
+  aiFeatureDisabled: "AIアシスタント機能は現在無効になっています",
+  aiApiKeyMissing: "Gemini APIキーが設定されていません",
+  aiRateLimitExceeded: "レート制限を超えました。後でもう一度お試しください",
+  aiNetworkError: "ネットワークエラー。接続を確認してください",
+  aiTimeoutError: "リクエストがタイムアウトしました。再試行してください",
+  aiInvalidResponse: "AIサービスからの応答が無効です",
 };

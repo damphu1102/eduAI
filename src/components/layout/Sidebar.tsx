@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -26,7 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   setIsMobileMenuOpen,
 }) => {
   const { t } = useTranslation();
-  const location = useLocation();
 
   const menuItems = [
     {

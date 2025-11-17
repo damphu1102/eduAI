@@ -82,12 +82,15 @@ export const en = {
   classManagementTitle: "Class Management",
   classManagementDesc: "Manage your classes, students, and assignments",
   addNewClass: "Add New Class",
+  createClass: "Create Class",
   allClasses: "All Classes",
+  allStatus: "All Status",
   className: "Class Name",
   subjects: "Subjects",
   activeClasses: "Active Classes",
   active: "Active",
   inactive: "Inactive",
+  cancelled: "Cancelled",
 
   // Course Management
   courseManagementTitle: "Course Management",

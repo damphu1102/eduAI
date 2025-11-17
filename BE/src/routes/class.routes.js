@@ -15,11 +15,22 @@ const router = express.Router();
 // Validation rules
 const classValidation = [
   body("name").notEmpty().withMessage("Class name is required"),
+  body("code").optional(),
   body("description").optional(),
+  body("level").optional(),
+  body("language").optional(),
+  body("max_students")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Max students must be a positive integer"),
   body("status")
     .optional()
-    .isIn(["active", "inactive"])
+    .isIn(["draft", "active", "completed", "cancelled"])
     .withMessage("Invalid status"),
+  body("start_date").optional().isISO8601().withMessage("Invalid start date"),
+  body("end_date").optional().isISO8601().withMessage("Invalid end date"),
+  body("schedule").optional(),
+  body("room").optional(),
 ];
 
 // All routes require authentication

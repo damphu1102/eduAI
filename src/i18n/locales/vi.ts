@@ -82,12 +82,15 @@ export const vi = {
   classManagementTitle: "Quản lý lớp học",
   classManagementDesc: "Quản lý các lớp học, học sinh và bài tập",
   addNewClass: "Thêm lớp mới",
+  createClass: "Tạo lớp học",
   allClasses: "Tất cả lớp học",
+  allStatus: "Tất cả trạng thái",
   className: "Tên lớp",
   subjects: "Môn học",
   activeClasses: "Lớp đang hoạt động",
   active: "Hoạt động",
   inactive: "Không hoạt động",
+  cancelled: "Đã hủy",
 
   // Course Management
   courseManagementTitle: "Quản lý khóa học",
